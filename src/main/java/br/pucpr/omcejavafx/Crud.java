@@ -1,8 +1,10 @@
 package br.pucpr.omcejavafx;
 
+import java.util.List;
+
 public interface Crud {
     void Inserir(String texto);
     void Atualizar(String texto);
-    void Consulta();
+    List<String> Consulta();
     void Exclusao();
 }
