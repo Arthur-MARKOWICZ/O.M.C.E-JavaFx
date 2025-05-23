@@ -8,4 +8,6 @@ public class Produto {
     private boolean vendido;
     private byte[] imagem;
     private String imageTipo;
+    private String condicao;
+    private String categoria;
 }
