@@ -7,4 +7,6 @@ module br.pucpr.omcejavafx {
 
     opens br.pucpr.omcejavafx to javafx.fxml;
     exports br.pucpr.omcejavafx;
+    exports br.pucpr.omcejavafx.Cruds;
+    opens br.pucpr.omcejavafx.Cruds to javafx.fxml;
 }
