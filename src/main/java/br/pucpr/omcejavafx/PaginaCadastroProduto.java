@@ -54,8 +54,6 @@ public class PaginaCadastroProduto extends Application {
 
         layout.getChildren().addAll(nomeProdutoBox,precoBox,detalhesBox, Condicao,
                 rb1, rb2,Categoria,categoria,finalizarCadastro);
-
-
         Scene scene = new Scene(layout, 320, 240);
 
         stage.setTitle("Cadastro de produto");
