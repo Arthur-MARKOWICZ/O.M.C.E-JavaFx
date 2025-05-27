@@ -12,8 +12,8 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader paginaEscolherClasse = new FXMLLoader(PaginaEscolherClasse.class
                 .getResource("escolherClasse-view.fxml"));
-        Scene escolherclasse = new Scene(paginaEscolherClasse.load(), 320, 240);
-        stage.setTitle("Pagamento");
+        Scene escolherclasse = new Scene(paginaEscolherClasse.load(), 500, 500);
+        stage.setTitle("Escolher a entidade");
         stage.setScene(escolherclasse);
         stage.show();
     }
