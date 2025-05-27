@@ -11,8 +11,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class PaginaCadastroProduto extends Application {
+    private File arquivoImagemSelecionado;
+    private String imagemTipo;
+    private byte[] imagem;
     @Override
     public void start(Stage stage) {
         VBox layout = new VBox();
@@ -55,10 +60,14 @@ public class PaginaCadastroProduto extends Application {
                     new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg", "*.gif")
             );
 
-            File arquivoSelecionado = fileChooser.showOpenDialog(stage);
-            if (arquivoSelecionado != null) {
-                Image imagem = new Image(arquivoSelecionado.toURI().toString());
+            arquivoImagemSelecionado = fileChooser.showOpenDialog(stage);
+            if (arquivoImagemSelecionado != null) {
+                Image imagem = new Image(arquivoImagemSelecionado.toURI().toString());
                 imagemView.setImage(imagem);
+
+                // Obter o tipo da imagem
+                String nomeArquivo = arquivoImagemSelecionado.getName();
+                imagemTipo = nomeArquivo.substring(nomeArquivo.lastIndexOf(".") + 1).toLowerCase();
             } else {
                 Alert alerta = new Alert(Alert.AlertType.WARNING);
                 alerta.setTitle("Nenhuma imagem selecionada");
@@ -70,20 +79,75 @@ public class PaginaCadastroProduto extends Application {
 
         Button finalizarCadastro = new Button("Finalizar cadastro de produto");
         finalizarCadastro.setOnAction(actionEvent -> {
-            String nome = nomeProdutoField.getText();
-            String precoProduto = precoField.getText();
-            String detalhesProduto = detalhesField.getText();
-            String condicaoProduto = rb1.isSelected() ? "NOVO" : (rb2.isSelected() ? "USADO" : "Não especificado");
-            String categoriaSelecionada = categoria.getValue();
+            try {
+                // Validar campos obrigatórios
+                if (nomeProdutoField.getText().isEmpty() || precoField.getText().isEmpty() ||
+                        condicao.getSelectedToggle() == null || categoria.getValue() == null ||
+                        arquivoImagemSelecionado == null) {
 
-            System.out.println("Cadastro completo:");
-            System.out.println("Nome: " + nome);
-            System.out.println("Preço: " + precoProduto);
-            System.out.println("Detalhes: " + detalhesProduto);
-            System.out.println("Condição: " + condicaoProduto);
-            System.out.println("Categoria: " + categoriaSelecionada);
+                    Alert alerta = new Alert(Alert.AlertType.WARNING);
+                    alerta.setTitle("Campos obrigatórios");
+                    alerta.setHeaderText(null);
+                    alerta.setContentText("Por favor, preencha todos os campos obrigatórios e selecione uma imagem.");
+                    alerta.showAndWait();
+                    return;
+                }
+
+                // Converter a imagem para byte[]
+                byte[] imagemBytes = Files.readAllBytes(arquivoImagemSelecionado.toPath());
+
+                // Criar novo produto
+                Produto produto = new Produto(
+                        System.currentTimeMillis(), // ID único baseado no timestamp
+                        nomeProdutoField.getText(),
+                        Double.parseDouble(precoField.getText()),
+                        detalhesField.getText(),
+                        false, // vendido = false por padrão
+                        imagem,
+                        imagemTipo,
+                        rb1.isSelected() ? "NOVO" : "USADO",
+                        categoria.getValue()
+                );
+
+                ProdutoSalvar.salvarProduto(produto);
+
+                Alert info = new Alert(Alert.AlertType.INFORMATION);
+                info.setTitle("Informação");
+                info.setHeaderText("Local do arquivo");
+                info.setContentText("Arquivo salvo em: " + ProdutoSalvar.getCaminhoArquivo());
+                info.showAndWait();
+
+                Alert sucesso = new Alert(Alert.AlertType.INFORMATION);
+                sucesso.setTitle("Sucesso");
+                sucesso.setHeaderText(null);
+                sucesso.setContentText("Produto cadastrado com sucesso!");
+                sucesso.showAndWait();
+
+                // Limpar campos
+                nomeProdutoField.clear();
+                precoField.clear();
+                detalhesField.clear();
+                condicao.selectToggle(null);
+                categoria.setValue(null);
+                imagemView.setImage(null);
+                arquivoImagemSelecionado = null;
+
+            } catch (NumberFormatException e) {
+                Alert erro = new Alert(Alert.AlertType.ERROR);
+                erro.setTitle("Erro de formato");
+                erro.setHeaderText(null);
+                erro.setContentText("Por favor, insira um valor numérico válido para o preço.");
+                erro.showAndWait();
+            } catch (IOException e) {
+                Alert erro = new Alert(Alert.AlertType.ERROR);
+                erro.setTitle("Erro ao salvar");
+                erro.setHeaderText(null);
+                erro.setContentText("Ocorreu um erro ao salvar o produto: " + e.getMessage());
+                erro.showAndWait();
+                e.printStackTrace();
+            }
         });
-        
+
         layout.getChildren().addAll(nomeProdutoBox, precoBox, detalhesBox, condicaoLabel, rb1, rb2,
                 categoriaLabel, categoria, imagemLabel, carregarImagemButton, imagemView, finalizarCadastro);
 

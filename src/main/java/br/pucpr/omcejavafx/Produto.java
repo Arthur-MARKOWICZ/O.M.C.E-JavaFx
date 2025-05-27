@@ -1,13 +1,16 @@
 package br.pucpr.omcejavafx;
 
-public class Produto {
+import java.io.Serializable;
+
+public class Produto implements Serializable {
+    private static final long serialVersionUID = 1L;
     private long id;
     private String nomeProduto;
     private double preco;
     private String detalhes;
     private boolean vendido;
     private byte[] imagem;
-    private String imageTipo;
+    private String imagemTipo;
     private String condicao;
     private String categoria;
 
@@ -19,7 +22,7 @@ public class Produto {
         this.detalhes = Detalhes;
         this.vendido = vendido;
         this.imagem = imagem;
-        this.imageTipo = imageTipo;
+        this.imagemTipo = imageTipo;
         this.condicao = condicao;
         this.categoria = categoria;
     }
@@ -30,7 +33,7 @@ public class Produto {
     public String getDetalhes() {return detalhes;}
     public boolean isVendido() {return vendido;}
     public byte[] getImagem() {return imagem;}
-    public String getImageTipo() {return imageTipo;}
+    public String getImageTipo() {return imagemTipo;}
     public String getCondicao() {return condicao;}
     public String getCategoria() {return categoria;}
 }
