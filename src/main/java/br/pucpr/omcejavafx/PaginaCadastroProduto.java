@@ -2,6 +2,7 @@ package br.pucpr.omcejavafx;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,72 +16,57 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 public class PaginaCadastroProduto extends Application {
+    private TextField nomeProdutoField;
+    private TextField precoField;
+    private TextArea detalhesField;
+    private ToggleGroup condicao;
+    private ComboBox<String> categoria;
     private File arquivoImagemSelecionado;
-    private String imagemTipo;
-    private byte[] imagem;
+    private ImageView imagemView;
+
     @Override
     public void start(Stage stage) {
-        VBox layout = new VBox();
-        layout.setSpacing(10);
+        Label nomeProdutoLabel = new Label("Nome do Produto:");
+        nomeProdutoField = new TextField();
 
-        Label nomeProduto = new Label("Nome do produto:");
-        TextField nomeProdutoField = new TextField();
-        VBox nomeProdutoBox = new VBox(10, nomeProduto, nomeProdutoField);
+        Label precoLabel = new Label("Preço:");
+        precoField = new TextField();
 
-        Label preco = new Label("Preço:");
-        TextField precoField = new TextField();
-        VBox precoBox = new VBox(10, preco, precoField);
-
-        Label detalhes = new Label("Detalhes:");
-        TextField detalhesField = new TextField();
-        VBox detalhesBox = new VBox(10, detalhes, detalhesField);
+        Label detalhesLabel = new Label("Detalhes:");
+        detalhesField = new TextArea();
 
         Label condicaoLabel = new Label("Condição:");
-        RadioButton rb1 = new RadioButton("NOVO");
-        RadioButton rb2 = new RadioButton("USADO");
-        ToggleGroup condicao = new ToggleGroup();
+        RadioButton rb1 = new RadioButton("Novo");
+        RadioButton rb2 = new RadioButton("Usado");
+        condicao = new ToggleGroup();
         rb1.setToggleGroup(condicao);
         rb2.setToggleGroup(condicao);
 
         Label categoriaLabel = new Label("Categoria:");
-        ChoiceBox<String> categoria = new ChoiceBox<>(FXCollections.observableArrayList(
-                "ESP-32", "ARDUINO", "RESISTORES", "SENSORES", "BATERIA", "CABOS",
-                "MOTORES", "CONECTORES", "OUTROS"));
+        categoria = new ComboBox<>(FXCollections.observableArrayList("ESP-32", "ARDUINO", "REGISTORES", "REGISTORES", "SENSORES", "BATERIA",
+                "CABOS","MOTORES","CONECTORES","OUTROS"));
+        categoria.setPromptText("Selecione uma categoria");
 
-        Label imagemLabel = new Label("Imagem do Produto:");
-        Button carregarImagemButton = new Button("Carregar Imagem");
-        ImageView imagemView = new ImageView();
-        imagemView.setFitWidth(200);
+        Button selecionarImagemButton = new Button("Selecionar imagem");
+        imagemView = new ImageView();
+        imagemView.setFitWidth(150);
+        imagemView.setFitHeight(150);
         imagemView.setPreserveRatio(true);
 
-        carregarImagemButton.setOnAction(actionEvent -> {
+        selecionarImagemButton.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Selecionar Imagem do Produto");
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg", "*.gif")
-            );
-
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg"));
             arquivoImagemSelecionado = fileChooser.showOpenDialog(stage);
+
             if (arquivoImagemSelecionado != null) {
                 Image imagem = new Image(arquivoImagemSelecionado.toURI().toString());
                 imagemView.setImage(imagem);
-
-                // Obter o tipo da imagem
-                String nomeArquivo = arquivoImagemSelecionado.getName();
-                imagemTipo = nomeArquivo.substring(nomeArquivo.lastIndexOf(".") + 1).toLowerCase();
-            } else {
-                Alert alerta = new Alert(Alert.AlertType.WARNING);
-                alerta.setTitle("Nenhuma imagem selecionada");
-                alerta.setHeaderText(null);
-                alerta.setContentText("Por favor, selecione uma imagem válida.");
-                alerta.showAndWait();
             }
         });
 
         Button finalizarCadastro = new Button("Finalizar cadastro de produto");
         finalizarCadastro.setOnAction(actionEvent -> {
             try {
-                // Validar campos obrigatórios
                 if (nomeProdutoField.getText().isEmpty() || precoField.getText().isEmpty() ||
                         condicao.getSelectedToggle() == null || categoria.getValue() == null ||
                         arquivoImagemSelecionado == null) {
@@ -92,45 +78,31 @@ public class PaginaCadastroProduto extends Application {
                     alerta.showAndWait();
                     return;
                 }
-
-                // Converter a imagem para byte[]
                 byte[] imagemBytes = Files.readAllBytes(arquivoImagemSelecionado.toPath());
+                String imagemTipo = Files.probeContentType(arquivoImagemSelecionado.toPath());
 
-                // Criar novo produto
                 Produto produto = new Produto(
-                        System.currentTimeMillis(), // ID único baseado no timestamp
+                        System.currentTimeMillis(),
                         nomeProdutoField.getText(),
                         Double.parseDouble(precoField.getText()),
                         detalhesField.getText(),
-                        false, // vendido = false por padrão
-                        imagem,
+                        false,
+                        imagemBytes,
                         imagemTipo,
-                        rb1.isSelected() ? "NOVO" : "USADO",
+                        condicao.getSelectedToggle().toString().contains("Novo") ? "NOVO" : "USADO",
                         categoria.getValue()
                 );
 
-                ProdutoSalvar.salvarProduto(produto);
 
-                Alert info = new Alert(Alert.AlertType.INFORMATION);
-                info.setTitle("Informação");
-                info.setHeaderText("Local do arquivo");
-                info.setContentText("Arquivo salvo em: " + ProdutoSalvar.getCaminhoArquivo());
-                info.showAndWait();
+                ProdutoSalvar.salvarProduto(produto, "produto.dat");
+
 
                 Alert sucesso = new Alert(Alert.AlertType.INFORMATION);
                 sucesso.setTitle("Sucesso");
                 sucesso.setHeaderText(null);
                 sucesso.setContentText("Produto cadastrado com sucesso!");
                 sucesso.showAndWait();
-
-                // Limpar campos
-                nomeProdutoField.clear();
-                precoField.clear();
-                detalhesField.clear();
-                condicao.selectToggle(null);
-                categoria.setValue(null);
-                imagemView.setImage(null);
-                arquivoImagemSelecionado = null;
+                limparFormulario();
 
             } catch (NumberFormatException e) {
                 Alert erro = new Alert(Alert.AlertType.ERROR);
@@ -148,13 +120,27 @@ public class PaginaCadastroProduto extends Application {
             }
         });
 
-        layout.getChildren().addAll(nomeProdutoBox, precoBox, detalhesBox, condicaoLabel, rb1, rb2,
-                categoriaLabel, categoria, imagemLabel, carregarImagemButton, imagemView, finalizarCadastro);
-
+        VBox layout = new VBox(10, nomeProdutoLabel, nomeProdutoField, precoLabel, precoField, detalhesLabel,
+                detalhesField, condicaoLabel, rb1, rb2, categoriaLabel, categoria, selecionarImagemButton, imagemView, finalizarCadastro);
+        layout.setPadding(new Insets(20));
         Scene scene = new Scene(layout, 400, 600);
-        stage.setTitle("Cadastro de produto");
+
+        stage.setTitle("Cadastro de Produto");
         stage.setScene(scene);
         stage.show();
+    }
+
+    /**
+     * Limpa todos os campos do formulário após o cadastro.
+     */
+    private void limparFormulario() {
+        nomeProdutoField.clear();
+        precoField.clear();
+        detalhesField.clear();
+        condicao.selectToggle(null);
+        categoria.setValue(null);
+        imagemView.setImage(null);
+        arquivoImagemSelecionado = null;
     }
 
     public static void main(String[] args) {
