@@ -1,22 +1,29 @@
 package br.pucpr.omcejavafx;
 
 import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProdutoSalvar {
     private static final String ARQUIVO_DAT = System.getProperty("user.home") + "/produtos_omce.dat";
 
-    public static void salvarProduto(Produto produto) {
-        List<Produto> produtos = carregarProdutos();
-        produtos.add(produto);
+    /**
+     * Salva uma lista de produtos em um arquivo binário (.dat).
+     *
+     * @param produtos A lista de objetos Produto a ser salva.
+     * @param caminhoArquivo O caminho do arquivo onde será salvo.
+     * @throws IOException Se ocorrer um erro ao gravar o arquivo.
+     */
+    public static void salvarProdutos(List<Produto> produtos, String caminhoArquivo) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(caminhoArquivo);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARQUIVO_DAT))) {
-            oos.writeObject(produtos);
-            System.out.println("Produto salvo com sucesso em: " + ARQUIVO_DAT);
-        } catch (IOException e) {
-            System.err.println("Erro ao salvar produto: " + e.getMessage());
-            e.printStackTrace();
+            oos.writeObject(produtos); // Serializa uma lista de produtos
+            System.out.println("Lista de produtos salva com sucesso!");
+
         }
     }
 

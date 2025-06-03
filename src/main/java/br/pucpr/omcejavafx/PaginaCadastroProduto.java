@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 
 public class PaginaCadastroProduto extends Application {
     private File arquivoImagemSelecionado;
@@ -109,13 +110,13 @@ public class PaginaCadastroProduto extends Application {
                         categoria.getValue()
                 );
 
-                ProdutoSalvar.salvarProduto(produto);
-
                 Alert info = new Alert(Alert.AlertType.INFORMATION);
                 info.setTitle("Informação");
                 info.setHeaderText("Local do arquivo");
                 info.setContentText("Arquivo salvo em: " + ProdutoSalvar.getCaminhoArquivo());
                 info.showAndWait();
+
+                ProdutoSalvar.salvarProdutos((List<Produto>) produto, "produto.dat");
 
                 Alert sucesso = new Alert(Alert.AlertType.INFORMATION);
                 sucesso.setTitle("Sucesso");
@@ -123,7 +124,6 @@ public class PaginaCadastroProduto extends Application {
                 sucesso.setContentText("Produto cadastrado com sucesso!");
                 sucesso.showAndWait();
 
-                // Limpar campos
                 nomeProdutoField.clear();
                 precoField.clear();
                 detalhesField.clear();
