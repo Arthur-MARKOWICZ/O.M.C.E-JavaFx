@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PedidoDAO {
-    private static final String ARQUIVO = "pedidos.txt";
+    private static final String ARQUIVO = "pedidos.dat";
 
     public static void salvar(Pedido pedido) throws IOException {
         List<Pedido> pedidos = carregarTodos();
