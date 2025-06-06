@@ -36,4 +36,32 @@ public class Produto implements Serializable {
     public String getImageTipo() {return imagemTipo;}
     public String getCondicao() {return condicao;}
     public String getCategoria() {return categoria;}
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
+    }
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+    public void setDetalhes(String detalhes) {
+        this.detalhes = detalhes;
+    }
+    public void setVendido(boolean vendido) {
+        this.vendido = vendido;
+    }
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
+    }
+    public void setImagemTipo(String imagemTipo) {
+        this.imagemTipo = imagemTipo;
+    }
+    public void setCondicao(String condicao) {
+        this.condicao = condicao;
+    }
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
 }

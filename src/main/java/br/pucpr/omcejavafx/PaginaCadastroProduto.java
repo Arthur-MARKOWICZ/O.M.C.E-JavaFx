@@ -93,9 +93,7 @@ public class PaginaCadastroProduto extends Application {
                         categoria.getValue()
                 );
 
-
                 ProdutoSalvar.salvarProduto(produto, "produto.dat");
-
 
                 Alert sucesso = new Alert(Alert.AlertType.INFORMATION);
                 sucesso.setTitle("Sucesso");
@@ -130,9 +128,6 @@ public class PaginaCadastroProduto extends Application {
         stage.show();
     }
 
-    /**
-     * Limpa todos os campos do formulário após o cadastro.
-     */
     private void limparFormulario() {
         nomeProdutoField.clear();
         precoField.clear();
