@@ -10,71 +10,65 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class PaginaEscolherClasse {
+public class PaginaEscolherCrudPedido extends PaginaEscolherCRUD{
     @FXML
-    private Label Pagamento;
-
-
-    @FXML
-    protected void onPagamento(ActionEvent event) throws IOException {
-
+    private Label teste;
+    @Override
+    protected void onInserir(ActionEvent event) throws IOException {
 
         FXMLLoader paginaEscolherCRUD = new FXMLLoader(
-                PaginaEscolherCrudPagamento.class.getResource("escolherCrudPagamento-view.fxml")
+                PaginaCadastrarPedido.class.getResource("PedidoInserir-view.fxml")
         );
 
         Scene escolherclasse = new Scene(paginaEscolherCRUD.load(), 500, 500);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Pagamento");
-        stage.setScene(escolherclasse);
-        stage.show();
-    }
-    @FXML
-    private Label Usuario;
-
-    @FXML
-    protected void onUsuario(ActionEvent event) throws IOException {
-        FXMLLoader paginaEscolherCRUD = new FXMLLoader(
-                PaginaEscolherCRUD.class.getResource("escolherCrud-view.fxml")
-        );
-
-        Scene escolherclasse = new Scene(paginaEscolherCRUD.load(), 500, 500);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Usuario");
-        stage.setScene(escolherclasse);
-        stage.show();
-    } @FXML
-    private Label Pedido;
-
-    @FXML
-    protected void onPedido(ActionEvent event) throws IOException {
-        FXMLLoader paginaEscolherCRUD = new FXMLLoader(
-                PaginaEscolherCRUD.class.getResource("escolherCrudPedido-view.fxml")
-        );
-
-        Scene escolherclasse = new Scene(paginaEscolherCRUD.load(), 500, 500);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("pedido");
-        stage.setScene(escolherclasse);
-        stage.show();
-    } @FXML
-    private Label Produto;
-
-    @FXML
-    protected void onProduto(ActionEvent event) throws IOException {
-        FXMLLoader paginaEscolherCRUD = new FXMLLoader(
-                PaginaEscolherCRUD.class.getResource("escolherCrud-view.fxml")
-        );
-
-        Scene escolherclasse = new Scene(paginaEscolherCRUD.load(), 500, 500);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Produto");
+        stage.setTitle("Pedido");
         stage.setScene(escolherclasse);
         stage.show();
     }
 
+    @Override
+    protected void onConsultar(ActionEvent event) throws IOException {
+
+        FXMLLoader paginaEscolherCRUD = new FXMLLoader(
+                PaginaListarPedido.class.getResource("PedidoListar-view.fxml")
+        );
+
+        Scene escolherclasse = new Scene(paginaEscolherCRUD.load(), 500, 500);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Pedido");
+        stage.setScene(escolherclasse);
+        stage.show();
+
+    }
+
+    @Override
+    protected void onAtualizar(ActionEvent event) throws IOException {
+        FXMLLoader paginaEscolherCRUD = new FXMLLoader(
+                PaginaAtualizarPedido.class.getResource("PedidoAtualizar-view.fxml")
+        );
+
+        Scene escolherclasse = new Scene(paginaEscolherCRUD.load(), 500, 500);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Pedido");
+        stage.setScene(escolherclasse);
+        stage.show();
+    }
+
+    @Override
+    protected void onExcluir(ActionEvent event) throws IOException {
+        FXMLLoader paginaEscolherCRUD = new FXMLLoader(
+                PaginaExcluirPedido.class.getResource("PedidoExcluir-view.fxml")
+        );
+
+        Scene escolherclasse = new Scene(paginaEscolherCRUD.load(), 500, 500);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Pedido");
+        stage.setScene(escolherclasse);
+        stage.show();
+    }
 }

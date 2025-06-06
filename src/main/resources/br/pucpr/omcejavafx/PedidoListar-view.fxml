@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="br.pucpr.omcejavafx.PaginaListarPedido" spacing="10" alignment="CENTER" prefWidth="600" prefHeight="400">
+
+    <TableView fx:id="tablePedido" prefWidth="580" prefHeight="380">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="200"/>
+            <TableColumn fx:id="colValor" text="Valor" prefWidth="150"/>
+            <TableColumn fx:id="colEndereco" text="Endereço Entrega" prefWidth="230"/>
+        </columns>
+    </TableView>
+</VBox>

@@ -1,60 +1,43 @@
 package br.pucpr.omcejavafx;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
-public class PaginaCadastrarPedido extends Application {
+public class PaginaCadastrarPedido {
 
-    @Override
-    public void start(Stage stage) {
-        TextField idField = new TextField();
-        idField.setPromptText("ID do Pedido");
+    @FXML
+    private TextField idField;
 
-        TextField valorField = new TextField();
-        valorField.setPromptText("Valor");
+    @FXML
+    private TextField valorField;
 
-        TextField enderecoField = new TextField();
-        enderecoField.setPromptText("Endereço de Entrega");
+    @FXML
+    private TextField enderecoField;
 
-        Button btnSalvar = new Button("Salvar Pedido");
-        Label mensagem = new Label();
+    @FXML
+    private Label mensagemLabel;
 
-        btnSalvar.setOnAction(e -> {
-            try {
-                long id = Long.parseLong(idField.getText());
-                double valor = Double.parseDouble(valorField.getText());
-                String endereco = enderecoField.getText();
+    @FXML
+    private void cadastrarPedido() {
+        try {
+            long id = Long.parseLong(idField.getText());
+            double valor = Double.parseDouble(valorField.getText());
+            String endereco = enderecoField.getText();
 
-                Pedido pedido = new Pedido(id, valor, endereco);
-                PedidoDAO.salvar(pedido);
-                mensagem.setText("Pedido salvo com sucesso!");
+            Pedido pedido = new Pedido(id, valor, endereco);
+            PedidoDAO.salvar(pedido);
 
-                idField.clear();
-                valorField.clear();
-                enderecoField.clear();
-            } catch (NumberFormatException ex) {
-                mensagem.setText("Erro: ID e Valor devem ser numéricos.");
-            } catch (Exception ex) {
-                mensagem.setText("Erro ao salvar pedido: " + ex.getMessage());
-            }
-        });
+            mensagemLabel.setText("Pedido salvo com sucesso!");
 
-        VBox layout = new VBox(10,
-                new Label("Inserir Pedido"),
-                idField,
-                valorField,
-                enderecoField,
-                btnSalvar,
-                mensagem
-        );
-        layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
-
-        Scene scene = new Scene(layout, 350, 300);
-        stage.setTitle("Inserir Pedido");
-        stage.setScene(scene);
-        stage.show();
+            idField.clear();
+            valorField.clear();
+            enderecoField.clear();
+        } catch (NumberFormatException ex) {
+            mensagemLabel.setText("Erro: ID e Valor devem ser numéricos.");
+        } catch (Exception ex) {
+            mensagemLabel.setText("Erro ao salvar: " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 }
