@@ -6,16 +6,35 @@ public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     private long id;
     private String nome;
-    private String nomeusuario;
-    private int cpf;
+    private String nomeUsuario;
+    private String cpf;
     private String senha;
     private String sexo;
     private String datadenascimento;
-    private int telefone;
+    private String telefone;
     private String email;
     private String endereco;
     private String cep;
     private Boolean ativo;
+
+    public Usuario(long id, String nome, String nomeUsuario, String cpf, String senha, String sexo, String dataNascimento, String telefone, String email, String endereco, String cep, boolean ativo) {
+        this.id = id;
+        this.nome = nome;
+        this.nomeUsuario = nomeUsuario;
+        this.cpf = cpf;
+        this.senha = senha;
+        this.sexo = sexo;
+        this.datadenascimento = dataNascimento;
+        this.telefone = telefone;
+        this.email = email;
+        this.endereco = endereco;
+        this.cep = cep;
+        this.ativo = ativo;
+    }
+
+    public Usuario() {
+
+    }
 
 
     public Boolean getAtivo() {
@@ -50,11 +69,11 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
@@ -82,20 +101,20 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
     public String getNomeusuario() {
-        return nomeusuario;
+        return nomeUsuario;
     }
 
     public void setNomeusuario(String nomeusuario) {
-        this.nomeusuario = nomeusuario;
+        this.nomeUsuario = nomeusuario;
     }
 
     public String getNome() {
