@@ -13,7 +13,7 @@ public class PaginaCadastrarUsuario extends Application {
     private TextField nomeUsuarioField;
     private TextField cpfField;
     private PasswordField senhaField;
-    private TextField sexoField;
+    private ToggleGroup sexoField;
     private TextField dataNascimentoField;
     private TextField telefoneField;
     private TextField emailField;
@@ -38,8 +38,16 @@ public class PaginaCadastrarUsuario extends Application {
         senhaField = new PasswordField();
         senhaField.setPromptText("Senha");
 
-        sexoField = new TextField();
-        sexoField.setPromptText("Sexo");
+        Label sexoLabel = new Label("Sexo:");
+        RadioButton rb1 = new RadioButton("Masculino");
+        RadioButton rb2 = new RadioButton("Feminino");
+        RadioButton rb3 = new RadioButton("Prefiro não me identificar");
+        sexoField = new ToggleGroup();
+        rb1.setToggleGroup(sexoField);
+        rb2.setToggleGroup(sexoField);
+        rb3.setToggleGroup(sexoField);
+
+        VBox sexoBox = new VBox(5, sexoLabel, rb1, rb2, rb3);
 
         dataNascimentoField = new TextField();
         dataNascimentoField.setPromptText("Data de Nascimento");
@@ -61,14 +69,14 @@ public class PaginaCadastrarUsuario extends Application {
         Button btnSalvar = new Button("Finalizar Cadastro de Usuário");
         btnSalvar.setOnAction(e -> salvarUsuario());
 
-        VBox layout = new VBox(10,
+        VBox layout = new VBox(10.0,
                 new Label("Cadastro de Usuário"),
                 idField,
                 nomeField,
                 nomeUsuarioField,
                 cpfField,
                 senhaField,
-                sexoField,
+                sexoBox,
                 dataNascimentoField,
                 telefoneField,
                 emailField,
@@ -101,7 +109,13 @@ public class PaginaCadastrarUsuario extends Application {
             String nomeUsuario = nomeUsuarioField.getText();
             String cpf = cpfField.getText();
             String senha = senhaField.getText();
-            String sexo = sexoField.getText();
+
+            Toggle selectedToggle = sexoField.getSelectedToggle();
+            String sexo = "";
+            if (selectedToggle != null && selectedToggle instanceof RadioButton) {
+                sexo = ((RadioButton) selectedToggle).getText();
+            }
+
             String dataNascimento = dataNascimentoField.getText();
             String telefone = telefoneField.getText();
             String email = emailField.getText();
@@ -113,7 +127,6 @@ public class PaginaCadastrarUsuario extends Application {
                     sexo, dataNascimento, telefone, email, endereco, cep, ativo);
 
             UsuarioSalvar.salvarUsuario(usuario, "usuario.dat");
-
 
             mostrarAlerta("Usuário cadastrado com sucesso!", Alert.AlertType.INFORMATION);
             limparFormulario();
@@ -131,7 +144,7 @@ public class PaginaCadastrarUsuario extends Application {
         nomeUsuarioField.clear();
         cpfField.clear();
         senhaField.clear();
-        sexoField.clear();
+        sexoField.selectToggle(null);
         dataNascimentoField.clear();
         telefoneField.clear();
         emailField.clear();
@@ -150,3 +163,4 @@ public class PaginaCadastrarUsuario extends Application {
         launch();
     }
 }
+
