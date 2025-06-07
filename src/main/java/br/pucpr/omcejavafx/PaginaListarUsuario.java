@@ -1,59 +1,85 @@
 package br.pucpr.omcejavafx;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.List;
 
 public class PaginaListarUsuario extends Application {
 
     @Override
     public void start(Stage stage) {
-        TextArea areaUsuarios = new TextArea();
-        areaUsuarios.setEditable(false);
+        TableView<Usuario> tabela = new TableView<>();
+        ObservableList<Usuario> usuarios = FXCollections.observableArrayList();
 
-        Button btnCarregar = new Button("Carregar Usuários");
+        TableColumn<Usuario, String> idColuna = new TableColumn<>("ID");
+        idColuna.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
 
-        btnCarregar.setOnAction(e -> {
-            try {
-                List<Usuario> usuarios = UsuarioDAO.carregarTodos();
-                if (usuarios.isEmpty()) {
-                    areaUsuarios.setText("Nenhum usuário cadastrado.");
-                } else {
-                    StringBuilder sb = new StringBuilder();
-                    for (Usuario u : usuarios) {
-                        sb.append("ID: ").append(u.getId()).append("\n")
-                                .append("Nome: ").append(u.getNome()).append("\n")
-                                .append("Nome de Usuário: ").append(u.getNomeusuario()).append("\n")
-                                .append("CPF: ").append(u.getCpf()).append("\n")
-                                .append("Senha: ").append(u.getSenha()).append("\n")
-                                .append("Sexo: ").append(u.getSexo()).append("\n")
-                                .append("Nascimento: ").append(u.getDatadenascimento()).append("\n")
-                                .append("Telefone: ").append(u.getTelefone()).append("\n")
-                                .append("Email: ").append(u.getEmail()).append("\n")
-                                .append("Endereço: ").append(u.getEndereco()).append("\n")
-                                .append("CEP: ").append(u.getCep()).append("\n")
-                                .append("Ativo: ").append(u.getAtivo()).append("\n")
-                                .append("-------------------------------\n");
-                    }
-                    areaUsuarios.setText(sb.toString());
-                }
-            } catch (IOException ex) {
-                areaUsuarios.setText("Erro ao carregar usuários: " + ex.getMessage());
-            }
-        });
+        TableColumn<Usuario, String> nomeColuna = new TableColumn<>("Nome");
+        nomeColuna.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getNome()));
 
-        VBox layout = new VBox(10, new Label("Lista de Usuários:"), btnCarregar, areaUsuarios);
-        layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
+        TableColumn<Usuario, String> usuarioColuna = new TableColumn<>("Usuário");
+        usuarioColuna.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getNomeusuario()));
 
-        Scene scene = new Scene(layout, 500, 500);
-        stage.setTitle("Listar Usuários");
+        TableColumn<Usuario, String> cpfColuna = new TableColumn<>("CPF");
+        cpfColuna.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getCpf()));
+
+        TableColumn<Usuario, String> sexoColuna = new TableColumn<>("Sexo");
+        sexoColuna.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getSexo()));
+
+        TableColumn<Usuario, String> nascimentoColuna = new TableColumn<>("Nascimento");
+        nascimentoColuna.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getDatadenascimento()));
+
+        TableColumn<Usuario, String> telefoneColuna = new TableColumn<>("Telefone");
+        telefoneColuna.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getTelefone()));
+
+        TableColumn<Usuario, String> emailColuna = new TableColumn<>("E-mail");
+        emailColuna.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getEmail()));
+
+        TableColumn<Usuario, String> ativoColuna = new TableColumn<>("Ativo");
+        ativoColuna.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getAtivo() ? "Sim" : "Não"));
+
+        tabela.getColumns().addAll(idColuna, nomeColuna, usuarioColuna, cpfColuna, sexoColuna,
+                nascimentoColuna, telefoneColuna, emailColuna, ativoColuna);
+
+        try {
+            List<Usuario> lista = UsuarioSalvar.carregarUsuarios("usuario.dat");
+            usuarios.addAll(lista);
+            tabela.setItems(usuarios);
+        } catch (Exception e) {
+            Alert erro = new Alert(Alert.AlertType.ERROR);
+            erro.setTitle("Erro ao carregar usuários");
+            erro.setHeaderText(null);
+            erro.setContentText("Erro: " + e.getMessage());
+            erro.showAndWait();
+        }
+
+        BorderPane layout = new BorderPane();
+        layout.setCenter(tabela);
+        Scene scene = new Scene(layout, 900, 600);
+
+        stage.setTitle("Lista de Usuários Cadastrados");
         stage.setScene(scene);
         stage.show();
     }
-}
 
+    public static void main(String[] args) {
+        launch();
+    }
+}

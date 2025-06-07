@@ -1,92 +1,144 @@
 package br.pucpr.omcejavafx;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.List;
+
 public class PaginaAtualizarUsuario extends Application {
+
+    private TextField idField;
+    private TextField nomeField;
+    private TextField nomeUsuarioField;
+    private TextField cpfField;
+    private PasswordField senhaField;
+    private ComboBox<String> sexoBox;
+    private TextField dataNascimentoField;
+    private TextField telefoneField;
+    private TextField emailField;
+    private TextField enderecoField;
+    private TextField cepField;
+    private CheckBox ativoCheckBox;
+
+    private Usuario usuarioAtual;
 
     @Override
     public void start(Stage stage) {
-        // Campos de entrada
-        TextField idField = new TextField(); idField.setPromptText("ID");
-        TextField nomeField = new TextField(); nomeField.setPromptText("Nome");
-        TextField nomeUsuarioField = new TextField(); nomeUsuarioField.setPromptText("Nome de Usuário");
-        TextField cpfField = new TextField(); cpfField.setPromptText("CPF");
-        PasswordField senhaField = new PasswordField(); senhaField.setPromptText("Senha");
-        TextField sexoField = new TextField(); sexoField.setPromptText("Sexo");
-        TextField dataNascimentoField = new TextField(); dataNascimentoField.setPromptText("Data de Nascimento");
-        TextField telefoneField = new TextField(); telefoneField.setPromptText("Telefone");
-        TextField emailField = new TextField(); emailField.setPromptText("Email");
-        TextField enderecoField = new TextField(); enderecoField.setPromptText("Endereço");
-        TextField cepField = new TextField(); cepField.setPromptText("CEP");
-        CheckBox ativoCheckBox = new CheckBox("Ativo");
+        Label idLabel = new Label("ID do Usuário:");
+        idField = new TextField();
 
-        Button btnAtualizar = new Button("Atualizar");
-        Label mensagem = new Label();
+        Button buscarButton = new Button("Buscar");
+        buscarButton.setOnAction(e -> buscarUsuario());
 
-        btnAtualizar.setOnAction(e -> {
-            try {
-                Usuario usuario = new Usuario();
+        nomeField = new TextField();
+        nomeUsuarioField = new TextField();
+        cpfField = new TextField();
+        senhaField = new PasswordField();
+        sexoBox = new ComboBox<>(FXCollections.observableArrayList("MASCULINO", "FEMININO", "OUTRO"));
+        dataNascimentoField = new TextField();
+        telefoneField = new TextField();
+        emailField = new TextField();
+        enderecoField = new TextField();
+        cepField = new TextField();
+        ativoCheckBox = new CheckBox("Ativo");
 
-                usuario.setId(Long.parseLong(idField.getText().trim()));
-                usuario.setNome(nomeField.getText().trim());
-                usuario.setNomeusuario(nomeUsuarioField.getText().trim());
-                usuario.setCpf(cpfField.getText().trim());
-                usuario.setSenha(senhaField.getText().trim());
-                usuario.setSexo(sexoField.getText().trim());
-                usuario.setDatadenascimento(dataNascimentoField.getText().trim());
-                usuario.setTelefone(telefoneField.getText().trim());
-                usuario.setEmail(emailField.getText().trim());
-                usuario.setEndereco(enderecoField.getText().trim());
-                usuario.setCep(cepField.getText().trim());
-                usuario.setAtivo(ativoCheckBox.isSelected());
+        Button salvarButton = new Button("Salvar Alterações");
+        salvarButton.setOnAction(e -> salvarAlteracoes());
 
-                // Chamada ao DAO (supondo que este método exista)
-                boolean atualizado = UsuarioDAO.atualizar(usuario);
+        VBox layout = new VBox(10, idLabel, idField, buscarButton,
+                new Label("Nome:"), nomeField,
+                new Label("Nome de Usuário:"), nomeUsuarioField,
+                new Label("CPF:"), cpfField,
+                new Label("Senha:"), senhaField,
+                new Label("Sexo:"), sexoBox,
+                new Label("Data de Nascimento:"), dataNascimentoField,
+                new Label("Telefone:"), telefoneField,
+                new Label("Email:"), emailField,
+                new Label("Endereço:"), enderecoField,
+                new Label("CEP:"), cepField,
+                ativoCheckBox,
+                salvarButton);
 
-                if (atualizado) {
-                    mensagem.setText("Usuário atualizado com sucesso.");
-                } else {
-                    mensagem.setText("Usuário não encontrado.");
-                }
-
-                // Limpar campos
-                idField.clear();
-                nomeField.clear();
-                nomeUsuarioField.clear();
-                cpfField.clear();
-                senhaField.clear();
-                sexoField.clear();
-                dataNascimentoField.clear();
-                telefoneField.clear();
-                emailField.clear();
-                enderecoField.clear();
-                cepField.clear();
-                ativoCheckBox.setSelected(false);
-
-            } catch (NumberFormatException ex) {
-                mensagem.setText("ID deve ser um número.");
-            } catch (Exception ex) {
-                mensagem.setText("Erro ao atualizar: " + ex.getMessage());
-                ex.printStackTrace(); // Para debug
-            }
-        });
-
-        VBox layout = new VBox(8,
-                new Label("Atualizar Usuário"),
-                idField, nomeField, nomeUsuarioField, cpfField, senhaField, sexoField,
-                dataNascimentoField, telefoneField, emailField, enderecoField, cepField,
-                ativoCheckBox, btnAtualizar, mensagem
-        );
-        layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
-
+        layout.setPadding(new Insets(20));
         Scene scene = new Scene(layout, 400, 650);
-        stage.setTitle("Atualizar Usuário");
+        stage.setTitle("Editar Usuário");
         stage.setScene(scene);
         stage.show();
     }
-}
 
+    private void buscarUsuario() {
+        try {
+            long id = Long.parseLong(idField.getText());
+            List<Usuario> usuarios = UsuarioSalvar.carregarUsuarios("usuario.dat");
+            for (Usuario u : usuarios) {
+                if (u.getId() == id) {
+                    usuarioAtual = u;
+                    preencherFormulario(u);
+                    return;
+                }
+            }
+
+            mostrarAlerta("Usuário não encontrado", Alert.AlertType.WARNING);
+
+        } catch (NumberFormatException ex) {
+            mostrarAlerta("ID inválido", Alert.AlertType.ERROR);
+        }
+    }
+
+    private void preencherFormulario(Usuario u) {
+        nomeField.setText(u.getNome());
+        nomeUsuarioField.setText(u.getNomeusuario());
+        cpfField.setText(u.getCpf());
+        senhaField.setText(u.getSenha());
+        sexoBox.setValue(u.getSexo());
+        dataNascimentoField.setText(u.getDatadenascimento());
+        telefoneField.setText(u.getTelefone());
+        emailField.setText(u.getEmail());
+        enderecoField.setText(u.getEndereco());
+        cepField.setText(u.getCep());
+        ativoCheckBox.setSelected(u.getAtivo());
+    }
+
+    private void salvarAlteracoes() {
+        if (usuarioAtual == null) {
+            mostrarAlerta("Nenhum usuário carregado.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            usuarioAtual.setNome(nomeField.getText().trim());
+            usuarioAtual.setNomeusuario(nomeUsuarioField.getText().trim());
+            usuarioAtual.setCpf(cpfField.getText().trim());
+            usuarioAtual.setSenha(senhaField.getText().trim());
+            usuarioAtual.setSexo(sexoBox.getValue());
+            usuarioAtual.setDatadenascimento(dataNascimentoField.getText().trim());
+            usuarioAtual.setTelefone(telefoneField.getText().trim());
+            usuarioAtual.setEmail(emailField.getText().trim());
+            usuarioAtual.setEndereco(enderecoField.getText().trim());
+            usuarioAtual.setCep(cepField.getText().trim());
+            usuarioAtual.setAtivo(ativoCheckBox.isSelected());
+
+            UsuarioSalvar.atualizarUsuario(usuarioAtual, "usuario.dat");
+
+            mostrarAlerta("Usuário atualizado com sucesso!", Alert.AlertType.INFORMATION);
+        } catch (NumberFormatException | IOException e) {
+            mostrarAlerta("Erro ao salvar: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private void mostrarAlerta(String mensagem, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setContentText(mensagem);
+        alerta.showAndWait();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+}
