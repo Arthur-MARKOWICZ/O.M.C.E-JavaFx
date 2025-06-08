@@ -65,8 +65,8 @@ public class PaginaAtualizarUsuario extends Application {
                 ativoCheckBox,
                 salvarButton);
 
-        layout.setPadding(new Insets(20));
-        Scene scene = new Scene(layout, 400, 650);
+        layout.setPadding(new Insets(10));
+        Scene scene = new Scene(layout, 300, 900);
         stage.setTitle("Editar Usuário");
         stage.setScene(scene);
         stage.show();
