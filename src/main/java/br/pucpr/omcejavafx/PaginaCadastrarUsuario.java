@@ -1,119 +1,166 @@
 package br.pucpr.omcejavafx;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class PaginaCadastrarUsuario extends Application {
+    private TextField idField;
+    private TextField nomeField;
+    private TextField nomeUsuarioField;
+    private TextField cpfField;
+    private PasswordField senhaField;
+    private ToggleGroup sexoField;
+    private TextField dataNascimentoField;
+    private TextField telefoneField;
+    private TextField emailField;
+    private TextField enderecoField;
+    private TextField cepField;
+    private CheckBox ativoCheckBox;
 
     @Override
     public void start(Stage stage) {
-        TextField idField = new TextField();
+        idField = new TextField();
         idField.setPromptText("ID");
 
-        TextField nomeField = new TextField();
+        nomeField = new TextField();
         nomeField.setPromptText("Nome");
 
-        TextField nomeUsuarioField = new TextField();
+        nomeUsuarioField = new TextField();
         nomeUsuarioField.setPromptText("Nome de Usuário");
 
-        TextField cpfField = new TextField();
+        cpfField = new TextField();
         cpfField.setPromptText("CPF");
 
-        PasswordField senhaField = new PasswordField();
+        senhaField = new PasswordField();
         senhaField.setPromptText("Senha");
 
-        TextField sexoField = new TextField();
-        sexoField.setPromptText("Sexo");
+        Label sexoLabel = new Label("Sexo:");
+        RadioButton rb1 = new RadioButton("Masculino");
+        RadioButton rb2 = new RadioButton("Feminino");
+        RadioButton rb3 = new RadioButton("Prefiro não me identificar");
+        sexoField = new ToggleGroup();
+        rb1.setToggleGroup(sexoField);
+        rb2.setToggleGroup(sexoField);
+        rb3.setToggleGroup(sexoField);
 
-        TextField dataNascimentoField = new TextField();
+        VBox sexoBox = new VBox(5, sexoLabel, rb1, rb2, rb3);
+
+        dataNascimentoField = new TextField();
         dataNascimentoField.setPromptText("Data de Nascimento");
 
-        TextField telefoneField = new TextField();
+        telefoneField = new TextField();
         telefoneField.setPromptText("Telefone");
 
-        TextField emailField = new TextField();
+        emailField = new TextField();
         emailField.setPromptText("E-mail");
 
-        TextField enderecoField = new TextField();
+        enderecoField = new TextField();
         enderecoField.setPromptText("Endereço");
 
-        TextField cepField = new TextField();
+        cepField = new TextField();
         cepField.setPromptText("CEP");
 
-        CheckBox ativoCheckBox = new CheckBox("Ativo");
+        ativoCheckBox = new CheckBox("Usuário Ativo");
 
-        Button btnSalvar = new Button("Salvar Usuário");
-        Label mensagem = new Label();
+        Button btnSalvar = new Button("Finalizar Cadastro de Usuário");
+        btnSalvar.setOnAction(e -> salvarUsuario());
 
-        btnSalvar.setOnAction(e -> {
-            try {
-                long id = Long.parseLong(idField.getText());
-                String nome = nomeField.getText();
-                String nomeUsuario = nomeUsuarioField.getText();
-                String cpf = cpfField.getText();
-                String senha = senhaField.getText();
-                String sexo = sexoField.getText();
-                String dataNascimento = dataNascimentoField.getText();
-                String telefone = telefoneField.getText();
-                String email = emailField.getText();
-                String endereco = enderecoField.getText();
-                String cep = cepField.getText();
-                boolean ativo = ativoCheckBox.isSelected();
-
-                Usuario usuario = new Usuario(id, nome, nomeUsuario, cpf, senha,
-                        sexo, dataNascimento, telefone, email, endereco, cep, ativo);
-
-                UsuarioDAO.salvar(usuario);
-
-                mensagem.setText("Usuário salvo com sucesso!");
-
-                // Limpar campos
-                idField.clear();
-                nomeField.clear();
-                nomeUsuarioField.clear();
-                cpfField.clear();
-                senhaField.clear();
-                sexoField.clear();
-                dataNascimentoField.clear();
-                telefoneField.clear();
-                emailField.clear();
-                enderecoField.clear();
-                cepField.clear();
-                ativoCheckBox.setSelected(false);
-            } catch (NumberFormatException ex) {
-                mensagem.setText("Erro: ID deve ser numérico.");
-            } catch (Exception ex) {
-                mensagem.setText("Erro ao salvar usuário: " + ex.getMessage());
-                ex.printStackTrace();
-            }
-        });
-
-        VBox layout = new VBox(10,
+        VBox layout = new VBox(10.0,
                 new Label("Cadastro de Usuário"),
                 idField,
                 nomeField,
                 nomeUsuarioField,
                 cpfField,
                 senhaField,
-                sexoField,
+                sexoBox,
                 dataNascimentoField,
                 telefoneField,
                 emailField,
                 enderecoField,
                 cepField,
                 ativoCheckBox,
-                btnSalvar,
-                mensagem
+                btnSalvar
         );
 
-        layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
-
+        layout.setPadding(new Insets(20));
         Scene scene = new Scene(layout, 400, 650);
-        stage.setTitle("Inserir Usuário");
+
+        stage.setTitle("Cadastro de Usuário");
         stage.setScene(scene);
         stage.show();
     }
+
+    private void salvarUsuario() {
+        try {
+            if (idField.getText().isEmpty() || nomeField.getText().isEmpty() ||
+                    nomeUsuarioField.getText().isEmpty() || cpfField.getText().isEmpty() ||
+                    senhaField.getText().isEmpty()) {
+
+                mostrarAlerta("Preencha os campos obrigatórios: ID, Nome, Nome de Usuário, CPF e Senha.", Alert.AlertType.WARNING);
+                return;
+            }
+
+            long id = Long.parseLong(idField.getText());
+            String nome = nomeField.getText();
+            String nomeUsuario = nomeUsuarioField.getText();
+            String cpf = cpfField.getText();
+            String senha = senhaField.getText();
+
+            Toggle selectedToggle = sexoField.getSelectedToggle();
+            String sexo = "";
+            if (selectedToggle != null && selectedToggle instanceof RadioButton) {
+                sexo = ((RadioButton) selectedToggle).getText();
+            }
+
+            String dataNascimento = dataNascimentoField.getText();
+            String telefone = telefoneField.getText();
+            String email = emailField.getText();
+            String endereco = enderecoField.getText();
+            String cep = cepField.getText();
+            boolean ativo = ativoCheckBox.isSelected();
+
+            Usuario usuario = new Usuario(id, nome, nomeUsuario, cpf, senha,
+                    sexo, dataNascimento, telefone, email, endereco, cep, ativo);
+
+            UsuarioSalvar.salvarUsuario(usuario, "usuario.dat");
+
+            mostrarAlerta("Usuário cadastrado com sucesso!", Alert.AlertType.INFORMATION);
+            limparFormulario();
+        } catch (NumberFormatException ex) {
+            mostrarAlerta("O campo ID deve conter apenas números.", Alert.AlertType.ERROR);
+        } catch (Exception ex) {
+            mostrarAlerta("Erro ao salvar usuário: " + ex.getMessage(), Alert.AlertType.ERROR);
+            ex.printStackTrace();
+        }
+    }
+
+    private void limparFormulario() {
+        idField.clear();
+        nomeField.clear();
+        nomeUsuarioField.clear();
+        cpfField.clear();
+        senhaField.clear();
+        sexoField.selectToggle(null);
+        dataNascimentoField.clear();
+        telefoneField.clear();
+        emailField.clear();
+        enderecoField.clear();
+        cepField.clear();
+        ativoCheckBox.setSelected(false);
+    }
+
+    private void mostrarAlerta(String mensagem, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setContentText(mensagem);
+        alerta.showAndWait();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
 }
+
