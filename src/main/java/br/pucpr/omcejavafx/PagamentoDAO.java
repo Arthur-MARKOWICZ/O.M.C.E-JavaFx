@@ -7,7 +7,7 @@ import java.util.List;
 public class PagamentoDAO {
     private static final String ARQUIVO = "pagamentos.dat";
 
-    // Salva um pagamento (adiciona à lista)
+
     public static void salvar(Pagamento pagamento) throws IOException, ClassNotFoundException {
         List<Pagamento> pagamentos = listar();
         pagamentos.add(pagamento);
@@ -51,15 +51,14 @@ public class PagamentoDAO {
             return new ArrayList<>();
         }
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            return (List<Pagamento>) ois.readObject();
+        try (ObjectInputStream ObjectInputStream = new ObjectInputStream(new FileInputStream(file))) {
+            return (List<Pagamento>) ObjectInputStream.readObject();
         }
     }
 
-    // Salva toda a lista no arquivo
     private static void salvarTodos(List<Pagamento> pagamentos) throws IOException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARQUIVO))) {
-            oos.writeObject(pagamentos);
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(ARQUIVO))) {
+            objectOutputStream.writeObject(pagamentos);
         }
     }
 }
