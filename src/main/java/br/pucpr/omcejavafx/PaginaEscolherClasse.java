@@ -35,17 +35,9 @@ public class PaginaEscolherClasse {
 
     @FXML
     protected void onUsuario(ActionEvent event) throws IOException {
-        FXMLLoader paginaEscolherCRUD = new FXMLLoader(
-                PaginaEscolherCRUD.class.getResource("escolherCrud-view.fxml")
-        );
-
-        Scene escolherclasse = new Scene(paginaEscolherCRUD.load(), 500, 500);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Usuario");
-        stage.setScene(escolherclasse);
-        stage.show();
-    } @FXML
+        new PaginaEscolherCrudUsuario().start(stage);
+    }
     private Label Pedido;
 
     @FXML
