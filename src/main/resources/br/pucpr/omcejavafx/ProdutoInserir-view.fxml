@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="br.pucpr.omcejavafx.PaginaCadastrarAvaliacaoProduto">
+    <VBox spacing="10" padding="20">
+        <Label text="ID do Produto:"/>
+        <TextField fx:id="txtId"/>
+
+        <Label text="Nota (0 a 10):"/>
+        <TextField fx:id="txtNota"/>
+
+        <Label text="Comentário:"/>
+        <TextArea fx:id="txtComentario" prefRowCount="4"/>
+
+        <Button text="Salvar Avaliação" onAction="#onSalvar"/>
+    </VBox>
+</AnchorPane>

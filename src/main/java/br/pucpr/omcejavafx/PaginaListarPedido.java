@@ -36,7 +36,6 @@ public class PaginaListarPedido {
             tablePedido.setItems(lista);
         } catch (IOException e) {
             e.printStackTrace();
-            // Poderia adicionar tratamento de erro aqui, exibir alerta etc.
         }
     }
 }

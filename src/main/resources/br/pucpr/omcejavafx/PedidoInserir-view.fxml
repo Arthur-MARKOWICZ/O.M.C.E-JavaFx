@@ -15,7 +15,7 @@
 
                 <TextField fx:id="idField" promptText="ID do Pedido" />
                 <TextField fx:id="valorField" promptText="Valor do Pedido" />
-                <TextField fx:id="enderecoField" promptText="Entereço de Entrega do Pedido" />
+                <TextField fx:id="enderecoField" promptText="Endereço de Entrega do Pedido" />
 
                 <Button text="Inserir Pedido" onAction="#cadastrarPedido" />
 
