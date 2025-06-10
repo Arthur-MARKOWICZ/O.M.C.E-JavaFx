@@ -27,4 +27,7 @@
     <Label fx:id="Produto"/>
     <Button text="Produto!" onAction="#onProduto"/>
 
+    <Label fx:id="AvaliacaoProduto"/>
+    <Button text="Avaliação Produto!" onAction="#onAvaliacaoProduto"/>
+
 </VBox>

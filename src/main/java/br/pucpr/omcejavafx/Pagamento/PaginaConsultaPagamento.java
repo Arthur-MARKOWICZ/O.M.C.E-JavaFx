@@ -1,16 +1,17 @@
 package br.pucpr.omcejavafx;
 
+import br.pucpr.omcejavafx.Pagamento.Pagamento;
+import br.pucpr.omcejavafx.Pagamento.PagamentoDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.IOException;
 import java.util.List;
 
-public class PaginaConsultaPagamento {
+public class PaginaConsultaPagamento extends VoltarPaginaPagamentoCrud {
     @FXML
     private TableView<Pagamento> tablePagamento;
 

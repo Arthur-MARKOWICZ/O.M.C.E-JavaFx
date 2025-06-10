@@ -4,17 +4,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="br.pucpr.omcejavafx.PaginaCadastrarAvaliacaoProduto">
-    <VBox spacing="10" padding="20">
-        <Label text="ID do Produto:"/>
-        <TextField fx:id="txtId"/>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="br.pucpr.omcejavafx.PaginaCadastrarAvaliacaoProduto"
+            prefHeight="400.0" prefWidth="600.0">
 
-        <Label text="Nota (0 a 10):"/>
-        <TextField fx:id="txtNota"/>
+    <children>
+        <VBox spacing="10.0" layoutX="150.0" layoutY="50.0">
+            <children>
+                <Label text="ID do Produto:" />
+                <TextField fx:id="txtId" />
 
-        <Label text="Comentário:"/>
-        <TextArea fx:id="txtComentario" prefRowCount="4"/>
+                <Label text="Nota (0 a 10):" />
+                <TextField fx:id="txtNota" />
 
-        <Button text="Salvar Avaliação" onAction="#onSalvar"/>
-    </VBox>
+                <Label text="Comentário:" />
+                <TextArea fx:id="txtComentario" prefRowCount="4" />
+
+                <Button text="Salvar Avaliação" onAction="#onSalvar" />
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

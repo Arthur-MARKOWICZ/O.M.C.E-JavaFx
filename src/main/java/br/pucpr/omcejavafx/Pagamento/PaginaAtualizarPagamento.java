@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class PaginaAtualizarPagamento {
+public class PaginaAtualizarPagamento extends VoltarPaginaPagamentoCrud {
     @FXML
     private TextField txtId;
     @FXML
@@ -54,8 +54,4 @@ public class PaginaAtualizarPagamento {
         }
     }
 
-    @FXML
-    private void onCancelar() {
-        txtId.getScene().getWindow().hide();
-    }
 }
