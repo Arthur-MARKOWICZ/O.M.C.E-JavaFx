@@ -1,4 +1,4 @@
-package br.pucpr.omcejavafx.Pagamento;
+package br.pucpr.omcejavafx;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

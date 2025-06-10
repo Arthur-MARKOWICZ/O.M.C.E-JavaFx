@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="br.pucpr.omcejavafx.Pagamento.PaginaAtualizarPagamento"
+      fx:controller="br.pucpr.omcejavafx.PaginaAtualizarPagamento"
       spacing="10" >
 
     <Label text="Atualizar Pagamento" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>

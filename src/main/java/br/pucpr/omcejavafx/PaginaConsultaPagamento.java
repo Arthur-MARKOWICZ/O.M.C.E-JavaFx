@@ -1,4 +1,4 @@
-package br.pucpr.omcejavafx.Pagamento;
+package br.pucpr.omcejavafx;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
