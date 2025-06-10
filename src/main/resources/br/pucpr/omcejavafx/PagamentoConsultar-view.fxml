@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="br.pucpr.omcejavafx.PaginaConsultaPagamento" spacing="10" alignment="CENTER" prefWidth="600" prefHeight="400">
+      fx:controller="br.pucpr.omcejavafx.Pagamento.PaginaConsultaPagamento" spacing="10" alignment="CENTER" prefWidth="600" prefHeight="400">
 
     <TableView fx:id="tablePagamento" prefWidth="580" prefHeight="380">
         <columns>
