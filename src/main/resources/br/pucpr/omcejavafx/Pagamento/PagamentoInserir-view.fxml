@@ -21,6 +21,7 @@
 
                 <Label fx:id="mensagemLabel" text="" />
             </children>
+            <Button text="Voltar!" onAction="#onVoltar"/>
         </VBox>
     </children>
 </AnchorPane>

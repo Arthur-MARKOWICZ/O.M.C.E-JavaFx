@@ -18,8 +18,6 @@ public class PaginaEscolherClasse {
 
     @FXML
     protected void onPagamento(ActionEvent event) throws IOException {
-
-
         FXMLLoader paginaEscolherCRUD = new FXMLLoader(
                 PaginaEscolherCrudPagamento.class.getResource("escolherCrudPagamento-view.fxml")
         );
