@@ -1,10 +1,10 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pagamento;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class PaginaAtualizarPagamento {
+public class PaginaAtualizarPagamento extends br.pucpr.omcejavafx.Pagamento.VoltarPaginaPagamentoCrud {
     @FXML
     private TextField txtId;
     @FXML
@@ -39,8 +39,6 @@ public class PaginaAtualizarPagamento {
             }
 
             Pagamento pagamento = new Pagamento(id, metodo, data);
-
-            // Atualiza pagamento no DAO pelo ID
             boolean atualizado = pagamentoDAO.atualizar(pagamento);
 
             lblMensagem.setStyle("-fx-text-fill: green;");
@@ -56,8 +54,4 @@ public class PaginaAtualizarPagamento {
         }
     }
 
-    @FXML
-    private void onCancelar() {
-        txtId.getScene().getWindow().hide();
-    }
 }

@@ -1,5 +1,6 @@
 package br.pucpr.omcejavafx;
 
+import br.pucpr.omcejavafx.Pagamento.PaginaEscolherCrudPagamento;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +18,6 @@ public class PaginaEscolherClasse {
 
     @FXML
     protected void onPagamento(ActionEvent event) throws IOException {
-
-
         FXMLLoader paginaEscolherCRUD = new FXMLLoader(
                 PaginaEscolherCrudPagamento.class.getResource("escolherCrudPagamento-view.fxml")
         );
@@ -35,17 +34,9 @@ public class PaginaEscolherClasse {
 
     @FXML
     protected void onUsuario(ActionEvent event) throws IOException {
-        FXMLLoader paginaEscolherCRUD = new FXMLLoader(
-                PaginaEscolherCRUD.class.getResource("escolherCrud-view.fxml")
-        );
-
-        Scene escolherclasse = new Scene(paginaEscolherCRUD.load(), 500, 500);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Usuario");
-        stage.setScene(escolherclasse);
-        stage.show();
-    } @FXML
+        new PaginaEscolherCrudUsuario().start(stage);
+    }
     private Label Pedido;
 
     @FXML
@@ -65,16 +56,22 @@ public class PaginaEscolherClasse {
 
     @FXML
     protected void onProduto(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        new PaginaEscolherCrudProduto().start(stage);
+    }
+    @FXML
+    private Label AvaliacaoProduto;
+    @FXML
+    protected void onAvaliacaoProduto(ActionEvent event) throws IOException {
         FXMLLoader paginaEscolherCRUD = new FXMLLoader(
-                PaginaEscolherCRUD.class.getResource("escolherCrud-view.fxml")
+                PaginaEscolherCRUD.class.getResource("escolherCrudAvaliacaoProduto-view.fxml")
         );
 
         Scene escolherclasse = new Scene(paginaEscolherCRUD.load(), 500, 500);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Produto");
+        stage.setTitle("Avaliacao");
         stage.setScene(escolherclasse);
         stage.show();
     }
-
 }

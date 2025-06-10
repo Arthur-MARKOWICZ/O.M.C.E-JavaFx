@@ -1,4 +1,4 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pagamento;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -6,11 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.IOException;
 import java.util.List;
 
-public class PaginaConsultaPagamento {
+public class PaginaConsultaPagamento extends VoltarPaginaPagamentoCrud {
     @FXML
     private TableView<Pagamento> tablePagamento;
 
