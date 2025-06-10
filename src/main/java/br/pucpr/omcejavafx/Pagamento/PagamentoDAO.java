@@ -1,9 +1,8 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pagamento;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import br.pucpr.omcejavafx.Pagamento.Pagamento;
 public class PagamentoDAO {
     private static final String ARQUIVO = "pagamentos.dat";
 

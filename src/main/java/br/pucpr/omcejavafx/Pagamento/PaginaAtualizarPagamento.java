@@ -1,10 +1,10 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pagamento;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class PaginaAtualizarPagamento extends VoltarPaginaPagamentoCrud {
+public class PaginaAtualizarPagamento extends br.pucpr.omcejavafx.Pagamento.VoltarPaginaPagamentoCrud {
     @FXML
     private TextField txtId;
     @FXML

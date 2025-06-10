@@ -1,7 +1,5 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pagamento;
 
-import br.pucpr.omcejavafx.Pagamento.Pagamento;
-import br.pucpr.omcejavafx.Pagamento.PagamentoDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

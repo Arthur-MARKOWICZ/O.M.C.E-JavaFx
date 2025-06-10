@@ -1,7 +1,5 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pagamento;
 
-import br.pucpr.omcejavafx.Pagamento.Pagamento;
-import br.pucpr.omcejavafx.Pagamento.PagamentoDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
