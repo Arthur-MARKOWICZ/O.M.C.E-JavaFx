@@ -1,42 +1,46 @@
 package br.pucpr.omcejavafx;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.List;
 
-public class PaginaListarPedido {
+public class PaginaListarPedido extends Application {
+    private static final String CAMINHO_ARQUIVO = "pedidos.dat";
 
-    @FXML
-    private TableView<Pedido> tablePedido;
-
-    @FXML
-    private TableColumn<Pedido, String> colId;
-
-    @FXML
-    private TableColumn<Pedido, String> colValor;
-
-    @FXML
-    private TableColumn<Pedido, String> colEndereco;
-
-    @FXML
-    public void initialize() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        colEndereco.setCellValueFactory(new PropertyValueFactory<>("enderecoEntrega"));
+    @Override
+    public void start(Stage stage) {
+        TextArea area = new TextArea();
+        area.setEditable(false);
 
         try {
-            List<Pedido> pedidos = PedidoDAO.carregarTodos();
-            ObservableList<Pedido> lista = FXCollections.observableArrayList(pedidos);
-            tablePedido.setItems(lista);
-        } catch (IOException e) {
+            List<Pedido> pedidos = PedidoDAO.carregarPedidos(CAMINHO_ARQUIVO);
+            if (pedidos.isEmpty()) {
+                area.setText("Nenhum pedido encontrado.");
+            } else {
+                StringBuilder sb = new StringBuilder();
+                for (Pedido p : pedidos) {
+                    sb.append("ID: ").append(p.getId())
+                            .append(" | Valor: ").append(p.getValor())
+                            .append(" | Endereço: ").append(p.getEnderecoEntrega())
+                            .append("\n");
+                }
+                area.setText(sb.toString());
+            }
+        } catch (Exception e) {
+            area.setText("Erro ao carregar pedidos: " + e.getMessage());
             e.printStackTrace();
-            // Poderia adicionar tratamento de erro aqui, exibir alerta etc.
         }
+
+        VBox layout = new VBox(10, area);
+        layout.setStyle("-fx-padding: 20;");
+
+        Scene scene = new Scene(layout, 400, 300);
+        stage.setTitle("Lista de Pedidos");
+        stage.setScene(scene);
+        stage.show();
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class PaginaExcluirPedido extends Application {
+    private static final String CAMINHO_ARQUIVO = "pedidos.dat";
 
     @Override
     public void start(Stage stage) {
@@ -20,7 +21,7 @@ public class PaginaExcluirPedido extends Application {
             try {
                 long id = Long.parseLong(idField.getText());
 
-                boolean removido = PedidoDAO.excluir(id);
+                boolean removido = PedidoDAO.excluirPedido(id, CAMINHO_ARQUIVO);
                 if (removido) {
                     mensagem.setText("Pedido excluído com sucesso.");
                 } else {
