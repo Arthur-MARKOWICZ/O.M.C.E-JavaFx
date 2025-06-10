@@ -1,6 +1,10 @@
 package br.pucpr.omcejavafx;
 
-public class Pedido {
+import java.io.Serializable;
+
+public class Pedido implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private long id;
     private double valor;
     private String enderecoEntrega;
@@ -29,5 +33,14 @@ public class Pedido {
 
     public void setEnderecoEntrega(String enderecoEntrega) {
         this.enderecoEntrega = enderecoEntrega;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", valor=" + valor +
+                ", enderecoEntrega='" + enderecoEntrega + '\'' +
+                '}';
     }
 }

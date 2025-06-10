@@ -1,50 +1,64 @@
 package br.pucpr.omcejavafx;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class PaginaAtualizarPedido {
+public class PaginaAtualizarPedido extends Application {
+    private static final String CAMINHO_ARQUIVO = "pedidos.dat";
 
-    @FXML
-    private TextField idField;
+    @Override
+    public void start(Stage stage) {
+        TextField idField = new TextField();
+        idField.setPromptText("ID do Pedido");
 
-    @FXML
-    private TextField valorField;
+        TextField valorField = new TextField();
+        valorField.setPromptText("Novo Valor");
 
-    @FXML
-    private TextField enderecoField;
+        TextField enderecoField = new TextField();
+        enderecoField.setPromptText("Novo Endereço de Entrega");
 
-    @FXML
-    private Label mensagemLabel;
+        Button btnAtualizar = new Button("Atualizar Pedido");
+        Label mensagem = new Label();
 
-    @FXML
-    private void atualizarPedido() {
-        try {
-            long id = Long.parseLong(idField.getText());
-            double novoValor = Double.parseDouble(valorField.getText());
-            String novoEndereco = enderecoField.getText();
+        btnAtualizar.setOnAction(e -> {
+            try {
+                long id = Long.parseLong(idField.getText());
+                double novoValor = Double.parseDouble(valorField.getText());
+                String novoEndereco = enderecoField.getText();
 
-            boolean atualizado = PedidoDAO.atualizar(id, novoValor, novoEndereco);
-            if (atualizado) {
-                mensagemLabel.setText("Pedido atualizado com sucesso.");
+                Pedido pedidoAtualizado = new Pedido(id, novoValor, novoEndereco);
+                PedidoDAO.atualizarPedido(pedidoAtualizado, CAMINHO_ARQUIVO);
+
+                mensagem.setText("Pedido atualizado com sucesso.");
 
                 idField.clear();
                 valorField.clear();
                 enderecoField.clear();
-            } else {
-                mensagemLabel.setText("Pedido não encontrado.");
-            }
-        } catch (NumberFormatException ex) {
-            mensagemLabel.setText("Erro: ID e Valor devem ser numéricos.");
-        } catch (Exception ex) {
-            mensagemLabel.setText("Erro ao atualizar pedido: " + ex.getMessage());
-            ex.printStackTrace();
-        }
-    }
 
-    @FXML
-    private void onCancelar() {
-        idField.getScene().getWindow().hide();
+            } catch (NumberFormatException ex) {
+                mensagem.setText("Erro: ID e Valor devem ser numéricos.");
+            } catch (Exception ex) {
+                mensagem.setText("Erro ao atualizar pedido: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        });
+
+        VBox layout = new VBox(10,
+                new Label("Atualizar Pedido"),
+                idField,
+                valorField,
+                enderecoField,
+                btnAtualizar,
+                mensagem
+        );
+        layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
+
+        Scene scene = new Scene(layout, 350, 300);
+        stage.setTitle("Atualizar Pedido");
+        stage.setScene(scene);
+        stage.show();
     }
 }

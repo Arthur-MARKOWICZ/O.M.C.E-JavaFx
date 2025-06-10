@@ -1,35 +1,52 @@
 package br.pucpr.omcejavafx;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class PaginaExcluirPedido {
+public class PaginaExcluirPedido extends Application {
+    private static final String CAMINHO_ARQUIVO = "pedidos.dat";
 
-    @FXML
-    private TextField txtId;
+    @Override
+    public void start(Stage stage) {
+        TextField idField = new TextField();
+        idField.setPromptText("ID do Pedido");
 
-    @FXML
-    private Label lblMensagem;
+        Button btnExcluir = new Button("Excluir Pedido");
+        Label mensagem = new Label();
 
-    @FXML
-    private void onExcluir() {
-        try {
-            long id = Long.parseLong(txtId.getText());
+        btnExcluir.setOnAction(e -> {
+            try {
+                long id = Long.parseLong(idField.getText());
 
-            boolean removido = PedidoDAO.excluir(id);
-            if (removido) {
-                lblMensagem.setText("Pedido excluído com sucesso.");
-            } else {
-                lblMensagem.setText("Pedido não encontrado.");
+                boolean removido = PedidoDAO.excluirPedido(id, CAMINHO_ARQUIVO);
+                if (removido) {
+                    mensagem.setText("Pedido excluído com sucesso.");
+                } else {
+                    mensagem.setText("Pedido não encontrado.");
+                }
+
+                idField.clear();
+            } catch (NumberFormatException ex) {
+                mensagem.setText("Erro: ID deve ser numérico.");
+            } catch (Exception ex) {
+                mensagem.setText("Erro ao excluir pedido: " + ex.getMessage());
             }
+        });
 
-            txtId.clear();
-        } catch (NumberFormatException ex) {
-            lblMensagem.setText("Erro: ID deve ser numérico.");
-        } catch (Exception ex) {
-            lblMensagem.setText("Erro ao excluir pedido: " + ex.getMessage());
-            ex.printStackTrace();
-        }
+        VBox layout = new VBox(10,
+                new Label("Excluir Pedido"),
+                idField,
+                btnExcluir,
+                mensagem
+        );
+        layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
+
+        Scene scene = new Scene(layout, 300, 250);
+        stage.setTitle("Excluir Pedido");
+        stage.setScene(scene);
+        stage.show();
     }
 }

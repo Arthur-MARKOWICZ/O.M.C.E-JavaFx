@@ -5,71 +5,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PedidoDAO {
-    private static final String ARQUIVO = "pedidos.dat";
 
-    public static void salvar(Pedido pedido) throws IOException {
-        List<Pedido> pedidos = carregarTodos();
-        pedidos.add(pedido);
-        salvarTodos(pedidos);
+    public static void salvarPedido(Pedido novoPedido, String caminhoArquivo) throws IOException {
+        List<Pedido> pedidos = carregarPedidos(caminhoArquivo);
+        pedidos.add(novoPedido);
+
+        try (FileOutputStream fos = new FileOutputStream(caminhoArquivo);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(pedidos);
+            System.out.println("Pedido salvo com sucesso!");
+        }
     }
 
-    public static List<Pedido> carregarTodos() throws IOException {
-        List<Pedido> pedidos = new ArrayList<>();
-        File file = new File(ARQUIVO);
-
-        if (!file.exists()) return pedidos;
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                String[] partes = linha.split(";");
-                if (partes.length == 3) {
-                    long id = Long.parseLong(partes[0]);
-                    double valor = Double.parseDouble(partes[1]);
-                    String endereco = partes[2];
-                    pedidos.add(new Pedido(id, valor, endereco));
-                }
-            }
+    @SuppressWarnings("unchecked")
+    public static List<Pedido> carregarPedidos(String caminhoArquivo) {
+        File arquivo = new File(caminhoArquivo);
+        if (!arquivo.exists()) {
+            return new ArrayList<>();
         }
 
-        return pedidos;
+        try (FileInputStream fis = new FileInputStream(caminhoArquivo);
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+            return (List<Pedido>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Erro ao carregar pedidos: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
-    public static boolean atualizar(long id, double novoValor, String novoEndereco) throws IOException {
-        List<Pedido> pedidos = carregarTodos();
-        boolean atualizado = false;
+    public static boolean excluirPedido(long id, String caminhoArquivo) throws IOException {
+        List<Pedido> pedidos = carregarPedidos(caminhoArquivo);
+        boolean removido = pedidos.removeIf(p -> p.getId() == id);
 
-        for (Pedido p : pedidos) {
-            if (p.getId() == id) {
-                p.setValor(novoValor);
-                p.setEnderecoEntrega(novoEndereco);
-                atualizado = true;
+        if (removido) {
+            try (FileOutputStream fos = new FileOutputStream(caminhoArquivo);
+                 ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                oos.writeObject(pedidos);
+            }
+            System.out.println("Pedido excluído com sucesso!");
+        }
+
+        return removido;
+    }
+
+    public static void atualizarPedido(Pedido pedidoAtulizado, String caminhoArquivo) throws IOException {
+        List<Pedido> pedidos = carregarPedidos(caminhoArquivo);
+
+        for (int i = 0; i < pedidos.size(); i++) {
+            if (pedidos.get(i).getId() == pedidoAtulizado.getId()) {
+                pedidos.set(i, pedidoAtulizado);
                 break;
             }
         }
 
-        if (atualizado) {
-            salvarTodos(pedidos);
-        }
-
-        return atualizado;
-    }
-
-    public static boolean excluir(long id) throws IOException {
-        List<Pedido> pedidos = carregarTodos();
-        boolean removido = pedidos.removeIf(p -> p.getId() == id);
-        if (removido) {
-            salvarTodos(pedidos);
-        }
-        return removido;
-    }
-
-    private static void salvarTodos(List<Pedido> pedidos) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARQUIVO))) {
-            for (Pedido p : pedidos) {
-                bw.write(p.getId() + ";" + p.getValor() + ";" + p.getEnderecoEntrega());
-                bw.newLine();
-            }
+        try (FileOutputStream fos = new FileOutputStream(caminhoArquivo);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(pedidos);
+            System.out.println("Pedido atualizado com sucesso!");
         }
     }
 }
