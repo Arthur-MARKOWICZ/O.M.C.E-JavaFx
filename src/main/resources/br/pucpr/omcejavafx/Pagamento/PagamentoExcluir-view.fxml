@@ -12,7 +12,6 @@
     <VBox spacing="15" alignment="CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
 
         <Label text="Excluir Pagamento" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-
         <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="ID do Pagamento:"/>
             <TextField fx:id="txtId" promptText="Digite o ID para excluir" prefWidth="200"/>
@@ -23,6 +22,6 @@
         </HBox>
 
         <Label fx:id="lblMensagem" style="-fx-text-fill: red;"/>
-
+        <Button text="Voltar!" onAction="#onVoltar"/>
     </VBox>
 </AnchorPane>
