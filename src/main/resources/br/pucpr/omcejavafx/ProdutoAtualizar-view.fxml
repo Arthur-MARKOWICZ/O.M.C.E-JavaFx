@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="br.pucpr.omcejavafx.PaginaAtualizarAvaliacaoProduto">
+    <VBox spacing="10" padding="20">
+        <Label text="ID da Avaliação a Atualizar:"/>
+        <TextField fx:id="txtId"/>
+
+        <Label text="Nova Nota (0 a 10):"/>
+        <TextField fx:id="txtNota"/>
+
+        <Label text="Novo Comentário:"/>
+        <TextArea fx:id="txtComentario" prefRowCount="4"/>
+
+        <Button text="Atualizar Avaliação" onAction="#onAtualizar"/>
+    </VBox>
+</AnchorPane>

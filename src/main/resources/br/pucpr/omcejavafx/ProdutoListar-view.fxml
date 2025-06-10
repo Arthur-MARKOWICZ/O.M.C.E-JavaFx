@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="br.pucpr.omcejavafx.PaginaListarAvaliacaoProduto">
+    <VBox spacing="10" padding="20">
+        <Label text="Lista de Avaliações:"/>
+        <TextArea fx:id="txtListaAvaliacoes" editable="false" prefRowCount="20"/>
+    </VBox>
+</AnchorPane>

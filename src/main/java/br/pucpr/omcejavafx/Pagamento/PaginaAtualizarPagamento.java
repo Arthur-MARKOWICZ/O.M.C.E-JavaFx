@@ -1,4 +1,4 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pagamento;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -39,8 +39,6 @@ public class PaginaAtualizarPagamento {
             }
 
             Pagamento pagamento = new Pagamento(id, metodo, data);
-
-            // Atualiza pagamento no DAO pelo ID
             boolean atualizado = pagamentoDAO.atualizar(pagamento);
 
             lblMensagem.setStyle("-fx-text-fill: green;");

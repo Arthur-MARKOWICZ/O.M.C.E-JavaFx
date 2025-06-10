@@ -1,5 +1,6 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pagamento;
 
+import br.pucpr.omcejavafx.PaginaEscolherCRUD;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class PaginaEscolherCrudPagamento extends PaginaEscolherCRUD{
+public class PaginaEscolherCrudPagamento extends PaginaEscolherCRUD {
     @FXML
     private Label teste;
     @Override

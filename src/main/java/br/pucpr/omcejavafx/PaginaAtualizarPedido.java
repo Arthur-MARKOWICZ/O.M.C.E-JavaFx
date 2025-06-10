@@ -45,7 +45,6 @@ public class PaginaAtualizarPedido {
 
     @FXML
     private void onCancelar() {
-        // Fecha a janela atual
         idField.getScene().getWindow().hide();
     }
 }
