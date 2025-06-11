@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 public class PagamentoDAO {
-    private static final String ARQUIVO = "pagamentos.dat";
+    private static final String ARQUIVO = "pagamento.dat";
 
 
     public static void salvar(Pagamento pagamento) throws IOException, ClassNotFoundException {
@@ -13,7 +13,7 @@ public class PagamentoDAO {
         salvarTodos(pagamentos);
     }
 
-    public boolean atualizar(Pagamento pagamentoAtualizado) throws IOException, ClassNotFoundException {
+    public static boolean atualizar(Pagamento pagamentoAtualizado) throws IOException, ClassNotFoundException {
         List<Pagamento> pagamentos = listar();
         boolean encontrado = false;
 

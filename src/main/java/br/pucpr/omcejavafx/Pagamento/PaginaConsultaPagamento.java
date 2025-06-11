@@ -1,40 +1,62 @@
 package br.pucpr.omcejavafx.Pagamento;
 
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import java.io.IOException;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
 import java.util.List;
 
-public class PaginaConsultaPagamento extends VoltarPaginaPagamentoCrud {
-    @FXML
-    private TableView<Pagamento> tablePagamento;
+public class PaginaConsultaPagamento extends Application {
 
-    @FXML
-    private TableColumn<Pagamento, String> colId;
+    @Override
+    public void start(Stage stage) {
+        TableView<Pagamento> tabela = new TableView<>();
+        ObservableList<Pagamento> Pagamentos = FXCollections.observableArrayList();
 
-    @FXML
-    private TableColumn<Pagamento, String> colMetodo;
+        TableColumn<Pagamento, String> idColuna = new TableColumn<>("ID");
+        idColuna.setCellValueFactory(cellData ->
+                new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
 
-    @FXML
-    private TableColumn<Pagamento, String> colData;
+        TableColumn<Pagamento, String> metodoDePagamentoColuna = new TableColumn<>("Metodo de pagamento");
+        metodoDePagamentoColuna.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty
+                (cellData.getValue().getMetodoPagamento()));
 
-    @FXML
-    public void initialize() {
+        TableColumn<Pagamento, String> dataColuna = new TableColumn<>("Data");
+        dataColuna.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty
+                (cellData.getValue().getData()));
 
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colMetodo.setCellValueFactory(new PropertyValueFactory<>("metodoPagamento"));
-        colData.setCellValueFactory(new PropertyValueFactory<>("data"));
+
+
+        tabela.getColumns().addAll(idColuna,metodoDePagamentoColuna,dataColuna);
 
         try {
-            List<Pagamento> pagamentos = PagamentoDAO.listar();
-            ObservableList<Pagamento> lista = FXCollections.observableArrayList(pagamentos);
-            tablePagamento.setItems(lista);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            List<Pagamento> lista = PagamentoDAO.listar();
+            Pagamentos.addAll(lista);
+            tabela.setItems(Pagamentos);
+        } catch (Exception e) {
+            Alert erro = new Alert(Alert.AlertType.ERROR);
+            erro.setTitle("Erro ao carregar Pagamento");
+            erro.setHeaderText(null);
+            erro.setContentText("Erro: " + e.getMessage());
+            erro.showAndWait();
         }
+
+        BorderPane layout = new BorderPane();
+        layout.setCenter(tabela);
+        Scene scene = new Scene(layout, 800, 600);
+
+        stage.setTitle("Lista de Pagamentos Cadastrados");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch();
     }
 }

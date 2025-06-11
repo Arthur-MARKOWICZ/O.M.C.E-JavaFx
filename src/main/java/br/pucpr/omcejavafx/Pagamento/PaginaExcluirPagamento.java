@@ -3,8 +3,9 @@ package br.pucpr.omcejavafx.Pagamento;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-public class PaginaExcluirPagamento extends VoltarPaginaPagamentoCrud {
+public class PaginaExcluirPagamento  {
     @FXML
     private TextField txtId;
 
@@ -34,5 +35,8 @@ public class PaginaExcluirPagamento extends VoltarPaginaPagamentoCrud {
             lblMensagem.setText("Erro ao excluir pagamento.");
             e.printStackTrace();
         }
+    }
+
+    public void start(Stage stage) {
     }
 }

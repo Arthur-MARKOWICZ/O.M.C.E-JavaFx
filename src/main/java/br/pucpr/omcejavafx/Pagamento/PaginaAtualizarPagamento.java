@@ -1,57 +1,111 @@
 package br.pucpr.omcejavafx.Pagamento;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import br.pucpr.omcejavafx.Produto;
+import br.pucpr.omcejavafx.ProdutoSalvar;
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class PaginaAtualizarPagamento extends br.pucpr.omcejavafx.Pagamento.VoltarPaginaPagamentoCrud {
-    @FXML
-    private TextField txtId;
-    @FXML
-    private TextField txtMetodo;
+import java.io.IOException;
+import java.util.List;
 
-    @FXML
-    private TextField txtData;
+import static java.lang.Integer.parseInt;
+import static javafx.application.Application.launch;
 
-    @FXML
-    private Label lblMensagem;
+public class PaginaAtualizarPagamento extends Application {
 
-    private PagamentoDAO pagamentoDAO = new PagamentoDAO();
+    private TextField idField;
+    private TextField metodoPagamento;
+    private TextField Data;
 
-    public void carregarPagamento(Pagamento pagamento) {
-        txtId.setText(String.valueOf(pagamento.getId()));
-        txtMetodo.setText(pagamento.getMetodoPagamento());
-        txtData.setText(pagamento.getData());
-        lblMensagem.setText("");
+
+    private Pagamento pagamentoAtual;
+
+    @Override
+    public void start(Stage stage) {
+        Label idLabel = new Label("ID do Pagamento:");
+        idField = new TextField();
+
+        Button buscarButton = new Button("Buscar");
+        buscarButton.setOnAction(e -> buscarPagamento());
+
+        metodoPagamento = new TextField();
+        Data = new TextField();
+
+        Button salvarButton = new Button("Salvar Alterações");
+        salvarButton.setOnAction(e -> salvarAlteracoes());
+
+        VBox layout = new VBox(10, idLabel, idField, buscarButton,
+                new Label("Metodo de Pagamento:"), metodoPagamento,
+                new Label("Data:"), Data,
+                salvarButton);
+
+        layout.setPadding(new Insets(20));
+        Scene scene = new Scene(layout, 400, 500);
+        stage.setTitle("Editar Pagamento");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    @FXML
-    private void onAtualizar() {
+    private void buscarPagamento() {
         try {
-            int id = Integer.parseInt(txtId.getText());
-            String metodo = txtMetodo.getText();
-            String data = txtData.getText();
+            int id = parseInt(idField.getText());
+            List<Pagamento> pagamentos = PagamentoDAO.listar();
 
-            if (metodo.isEmpty() || data.isEmpty()) {
-                lblMensagem.setStyle("-fx-text-fill: red;");
-                lblMensagem.setText("Preencha todos os campos.");
-                return;
+            for (Pagamento p : pagamentos) {
+                if (p.getId() == id) {
+                    pagamentoAtual = p;
+                    preencherFormulario(p);
+                    return;
+                }
             }
 
-            Pagamento pagamento = new Pagamento(id, metodo, data);
-            boolean atualizado = pagamentoDAO.atualizar(pagamento);
+            mostrarAlerta("Produto não encontrado", Alert.AlertType.WARNING);
 
-            lblMensagem.setStyle("-fx-text-fill: green;");
-            lblMensagem.setText("Pagamento atualizado com sucesso!");
-
-        } catch (NumberFormatException e) {
-            lblMensagem.setStyle("-fx-text-fill: red;");
-            lblMensagem.setText("ID inválido.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            lblMensagem.setStyle("-fx-text-fill: red;");
-            lblMensagem.setText("Erro ao atualizar pagamento.");
+        } catch (NumberFormatException ex) {
+            mostrarAlerta("ID inválido", Alert.AlertType.ERROR);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
+    private void preencherFormulario(Pagamento p) {
+        metodoPagamento.setText(p.getMetodoPagamento());
+        Data.setText(p.getData());
+
+    }
+
+    private void salvarAlteracoes() {
+        if (pagamentoAtual == null) {
+            mostrarAlerta("Nenhum produto carregado.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            pagamentoAtual.setMetodoPagamento(metodoPagamento.getText());
+            pagamentoAtual.setData(Data.getText());
+            PagamentoDAO.atualizar(pagamentoAtual);
+
+            mostrarAlerta("Pagamento atualizado com sucesso!", Alert.AlertType.INFORMATION);
+        } catch (NumberFormatException | IOException e) {
+            mostrarAlerta("Erro ao salvar: " + e.getMessage(), Alert.AlertType.ERROR);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void mostrarAlerta(String mensagem, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setContentText(mensagem);
+        alerta.showAndWait();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
 }
