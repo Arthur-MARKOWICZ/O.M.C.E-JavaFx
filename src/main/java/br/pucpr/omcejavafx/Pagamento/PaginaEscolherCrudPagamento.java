@@ -1,6 +1,7 @@
 package br.pucpr.omcejavafx.Pagamento;
 
 import br.pucpr.omcejavafx.*;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class PaginaEscolherCrudPagamento  {
+import static javafx.application.Application.launch;
+
+public class PaginaEscolherCrudPagamento  extends Application {
     public void start(Stage stage) {
         VBox layout = new VBox(10);
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
@@ -54,5 +57,8 @@ public class PaginaEscolherCrudPagamento  {
     private void abrirPaginaExclusao(Stage stage) {
         PaginaExcluirPagamento pagina = new PaginaExcluirPagamento();
         pagina.start(stage);
+    }
+    public static void main(String[] args) {
+        launch();
     }
 }

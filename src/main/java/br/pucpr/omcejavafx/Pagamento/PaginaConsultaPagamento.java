@@ -33,7 +33,7 @@ public class PaginaConsultaPagamento extends Application {
 
 
 
-        tabela.getColumns().addAll(idColuna, metodoDePagamentoColuna, dataColuna);
+        tabela.getColumns().addAll(idColuna,metodoDePagamentoColuna,dataColuna);
 
         try {
             List<Pagamento> lista = PagamentoDAO.listar();
@@ -41,7 +41,7 @@ public class PaginaConsultaPagamento extends Application {
             tabela.setItems(Pagamentos);
         } catch (Exception e) {
             Alert erro = new Alert(Alert.AlertType.ERROR);
-            erro.setTitle("Erro ao carregar produtos");
+            erro.setTitle("Erro ao carregar Pagamento");
             erro.setHeaderText(null);
             erro.setContentText("Erro: " + e.getMessage());
             erro.showAndWait();
