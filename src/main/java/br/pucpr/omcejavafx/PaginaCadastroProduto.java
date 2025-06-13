@@ -26,6 +26,13 @@ public class PaginaCadastroProduto extends Application {
 
     @Override
     public void start(Stage stage) {
+
+        Button voltarBtn = new Button("Voltar");
+        voltarBtn.setOnAction(e -> {
+            PaginaEscolherCrudProduto menu = new PaginaEscolherCrudProduto();
+            menu.voltarMenuProduto(stage);
+        });
+
         Label nomeProdutoLabel = new Label("Nome do Produto:");
         nomeProdutoField = new TextField();
 
@@ -119,9 +126,9 @@ public class PaginaCadastroProduto extends Application {
         });
 
         VBox layout = new VBox(10, nomeProdutoLabel, nomeProdutoField, precoLabel, precoField, detalhesLabel,
-                detalhesField, condicaoLabel, rb1, rb2, categoriaLabel, categoria, selecionarImagemButton, imagemView, finalizarCadastro);
+                detalhesField, condicaoLabel, rb1, rb2, categoriaLabel, categoria, selecionarImagemButton, imagemView, finalizarCadastro,voltarBtn);
         layout.setPadding(new Insets(20));
-        Scene scene = new Scene(layout, 400, 600);
+        Scene scene = new Scene(layout, 400, 700);
 
         stage.setTitle("Cadastro de Produto");
         stage.setScene(scene);

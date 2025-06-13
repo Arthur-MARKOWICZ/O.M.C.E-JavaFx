@@ -16,21 +16,28 @@ public class PaginaExcluirProduto extends Application {
     private Label statusLabel;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         Label label = new Label("ID do Produto para excluir:");
         idInput = new TextField();
         Button excluirBtn = new Button("Excluir Produto");
         statusLabel = new Label();
 
+        Button voltarBtn = new Button("Voltar");
+        voltarBtn.setOnAction(e -> {
+            PaginaEscolherCrudProduto menu = new PaginaEscolherCrudProduto();
+            menu.voltarMenuProduto(stage);
+        });
+
         excluirBtn.setOnAction(e -> excluirProduto());
 
-        VBox root = new VBox(10, label, idInput, excluirBtn, statusLabel);
+        VBox root = new VBox(10, label, idInput, excluirBtn, statusLabel, voltarBtn);
         root.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
-        primaryStage.setTitle("Excluir Produto");
-        primaryStage.setScene(new Scene(root, 800, 600));
-        primaryStage.show();
+        stage.setTitle("Excluir Produto");
+        stage.setScene(new Scene(root, 800, 600));
+        stage.show();
     }
+
 
     private void excluirProduto() {
         try {
