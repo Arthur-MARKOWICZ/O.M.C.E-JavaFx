@@ -27,10 +27,14 @@ public class PaginaExcluirPagamento  extends Application {
         idInput = new TextField();
         Button excluirBtn = new Button("Excluir Pagamento");
         statusLabel = new Label();
-
+        Button voltarBtn = new Button("Voltar");
+        voltarBtn.setOnAction(e -> {
+            PaginaEscolherCrudPagamento menu = new PaginaEscolherCrudPagamento();
+            menu.voltarMenuPagamento(primaryStage);
+        });
         excluirBtn.setOnAction(e -> excluirPagamento());
 
-        VBox root = new VBox(10, label, idInput, excluirBtn, statusLabel);
+        VBox root = new VBox(10, label, idInput, excluirBtn, voltarBtn,statusLabel);
         root.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
         primaryStage.setTitle("Excluir Pagamento");
