@@ -55,7 +55,7 @@ public class PaginaExcluirPedido extends Application {
         );
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
-        Scene scene = new Scene(layout, 300, 250);
+        Scene scene = new Scene(layout, 400, 300);
         stage.setTitle("Excluir Pedido");
         stage.setScene(scene);
         stage.show();

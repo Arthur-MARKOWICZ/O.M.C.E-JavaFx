@@ -64,7 +64,7 @@ public class PaginaCadastrarPedido extends Application {
         );
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
-        Scene scene = new Scene(layout, 350, 320);
+        Scene scene = new Scene(layout, 400, 300);
         stage.setTitle("Inserir Pedido");
         stage.setScene(scene);
         stage.show();
