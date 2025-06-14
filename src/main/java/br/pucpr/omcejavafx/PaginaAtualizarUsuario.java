@@ -30,6 +30,10 @@ public class PaginaAtualizarUsuario extends Application {
 
     @Override
     public void start(Stage stage) {
+        Button voltarBtn = new Button("Voltar");
+        voltarBtn.setOnAction(e -> {
+            PaginaEscolherCrudUsuario menu = new PaginaEscolherCrudUsuario();
+            menu.voltarMenuUsuario(stage);});
         Label idLabel = new Label("ID do Usuário:");
         idField = new TextField();
 
@@ -63,10 +67,13 @@ public class PaginaAtualizarUsuario extends Application {
                 new Label("Endereço:"), enderecoField,
                 new Label("CEP:"), cepField,
                 ativoCheckBox,
-                salvarButton);
+                salvarButton,voltarBtn);
 
         layout.setPadding(new Insets(10));
-        Scene scene = new Scene(layout, 300, 900);
+        ScrollPane scrollPane = new ScrollPane(layout);
+        scrollPane.setFitToWidth(true);
+
+        Scene scene = new Scene(scrollPane, 400, 600);
         stage.setTitle("Editar Usuário");
         stage.setScene(scene);
         stage.show();

@@ -49,4 +49,7 @@ public class PaginaEscolherCrudUsuario {
         PaginaExcluirUsuario pagina = new PaginaExcluirUsuario();
         pagina.start(stage);
     }
+    public void voltarMenuUsuario(Stage stage) {
+        new PaginaEscolherCrudUsuario().start(stage);
+    }
 }

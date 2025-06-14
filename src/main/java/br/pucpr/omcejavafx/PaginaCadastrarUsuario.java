@@ -23,6 +23,11 @@ public class PaginaCadastrarUsuario extends Application {
 
     @Override
     public void start(Stage stage) {
+        Button voltarBtn = new Button("Voltar");
+        voltarBtn.setOnAction(e -> {
+            PaginaEscolherCrudUsuario menu = new PaginaEscolherCrudUsuario();
+            menu.voltarMenuUsuario(stage);});
+
         idField = new TextField();
         idField.setPromptText("ID");
 
@@ -83,7 +88,7 @@ public class PaginaCadastrarUsuario extends Application {
                 enderecoField,
                 cepField,
                 ativoCheckBox,
-                btnSalvar
+                btnSalvar,voltarBtn
         );
 
         layout.setPadding(new Insets(20));

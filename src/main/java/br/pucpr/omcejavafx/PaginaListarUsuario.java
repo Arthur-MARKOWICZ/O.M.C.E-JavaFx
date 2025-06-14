@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -16,6 +17,12 @@ public class PaginaListarUsuario extends Application {
 
     @Override
     public void start(Stage stage) {
+        Button voltarBtn = new Button("Voltar");
+        voltarBtn.setOnAction(e -> {
+            PaginaEscolherCrudUsuario menu = new PaginaEscolherCrudUsuario();
+            menu.voltarMenuUsuario(stage);
+        });
+
         TableView<Usuario> tabela = new TableView<>();
         ObservableList<Usuario> usuarios = FXCollections.observableArrayList();
 
@@ -71,10 +78,13 @@ public class PaginaListarUsuario extends Application {
         }
 
         BorderPane layout = new BorderPane();
+        VBox topo = new VBox(10, voltarBtn);
+        topo.setStyle("-fx-padding: 10; -fx-alignment: center-left;");
+        layout.setTop(topo);
         layout.setCenter(tabela);
-        Scene scene = new Scene(layout, 900, 600);
 
-        stage.setTitle("Lista de Usuários Cadastrados");
+        Scene scene = new Scene(layout, 800, 600);
+        stage.setTitle("Lista de Usuarios Cadastrados");
         stage.setScene(scene);
         stage.show();
     }
