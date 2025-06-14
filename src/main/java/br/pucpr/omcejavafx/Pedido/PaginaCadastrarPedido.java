@@ -6,6 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class PaginaCadastrarPedido extends Application {
     private static final String CAMINHO_ARQUIVO = "pedidos.dat";
 
@@ -29,6 +31,15 @@ public class PaginaCadastrarPedido extends Application {
                 long id = Long.parseLong(idField.getText());
                 double valor = Double.parseDouble(valorField.getText());
                 String endereco = enderecoField.getText();
+
+                List<Pedido> pedidosExistentes = PedidoDAO.carregarPedidos(CAMINHO_ARQUIVO);
+                boolean idJaExiste = pedidosExistentes.stream()
+                        .anyMatch(p -> p.getId() == id);
+
+                if (idJaExiste) {
+                    mensagem.setText("Erro: Já existe um pedido com esse ID.");
+                    return;
+                }
 
                 Pedido pedido = new Pedido(id, valor, endereco);
                 PedidoDAO.salvarPedido(pedido, CAMINHO_ARQUIVO);

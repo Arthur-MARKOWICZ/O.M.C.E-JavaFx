@@ -1,7 +1,7 @@
 package br.pucpr.omcejavafx;
 
 import br.pucpr.omcejavafx.Pagamento.PaginaEscolherCrudPagamento;
-import br.pucpr.omcejavafx.Pedido.PaginaEscolherCrudPedido;
+import br.pucpr.omcejavafx.Pedido.PedidoMenu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +42,7 @@ public class PaginaEscolherClasse {
     @FXML
     protected void onPedido(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        new PaginaEscolherCrudPedido().start(stage);
+        new PedidoMenu().start(stage);
     }
 
     @FXML
