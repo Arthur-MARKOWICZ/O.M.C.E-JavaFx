@@ -1,5 +1,6 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pedido;
 
+import br.pucpr.omcejavafx.MenuPrincipal;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

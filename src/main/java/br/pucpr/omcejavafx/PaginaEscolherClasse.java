@@ -1,6 +1,7 @@
 package br.pucpr.omcejavafx;
 
 import br.pucpr.omcejavafx.Pagamento.PaginaEscolherCrudPagamento;
+import br.pucpr.omcejavafx.Pedido.PaginaEscolherCrudPedido;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pedido;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -66,7 +66,7 @@ public class PaginaAtualizarPedido extends Application {
         );
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
-        Scene scene = new Scene(layout, 350, 300);
+        Scene scene = new Scene(layout, 400, 300);
         stage.setTitle("Atualizar Pedido");
         stage.setScene(scene);
         stage.show();
