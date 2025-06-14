@@ -49,5 +49,8 @@ public class PaginaEscolherCrudProduto {
         PaginaExcluirProduto pagina = new PaginaExcluirProduto();
         pagina.start(stage);
     }
+    public void voltarMenuProduto(Stage stage) {
+        new PaginaEscolherCrudProduto().start(stage);
+    }
 
 }
