@@ -1,5 +1,6 @@
 package br.pucpr.omcejavafx.Pagamento;
 
+import br.pucpr.omcejavafx.PaginaEscolherCrudProduto;
 import br.pucpr.omcejavafx.Produto;
 import br.pucpr.omcejavafx.ProdutoSalvar;
 import javafx.application.Application;
@@ -28,7 +29,11 @@ public class PaginaAtualizarPagamento extends Application {
     public void start(Stage stage) {
         Label idLabel = new Label("ID do Pagamento:");
         idField = new TextField();
-
+        Button voltarBtn = new Button("Voltar");
+        voltarBtn.setOnAction(e -> {
+            PaginaEscolherCrudPagamento menu = new PaginaEscolherCrudPagamento();
+            menu.voltarMenuPagamento(stage);
+        });
         Button buscarButton = new Button("Buscar");
         buscarButton.setOnAction(e -> buscarPagamento());
 
@@ -40,7 +45,7 @@ public class PaginaAtualizarPagamento extends Application {
 
         VBox layout = new VBox(10, idLabel, idField, buscarButton,
                 new Label("Metodo de Pagamento:"), metodoPagamento,
-                new Label("Data:"), Data,
+                new Label("Data:"), Data,voltarBtn,
                 salvarButton);
 
         layout.setPadding(new Insets(20));
@@ -63,7 +68,7 @@ public class PaginaAtualizarPagamento extends Application {
                 }
             }
 
-            mostrarAlerta("Produto não encontrado", Alert.AlertType.WARNING);
+            mostrarAlerta("Pagamento não encontrado", Alert.AlertType.WARNING);
 
         } catch (NumberFormatException ex) {
             mostrarAlerta("ID inválido", Alert.AlertType.ERROR);

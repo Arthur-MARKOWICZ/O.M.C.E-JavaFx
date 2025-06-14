@@ -1,18 +1,11 @@
 package br.pucpr.omcejavafx.Pagamento;
 
-import br.pucpr.omcejavafx.*;
+import br.pucpr.omcejavafx.MenuPrincipal;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 import static javafx.application.Application.launch;
 
@@ -20,7 +13,11 @@ public class PaginaEscolherCrudPagamento  extends Application {
     public void start(Stage stage) {
         VBox layout = new VBox(10);
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
-
+        Button voltarBtn = new Button("Voltar");
+        voltarBtn.setOnAction(e -> {
+            MenuPrincipal menu = new MenuPrincipal();
+            menu.voltarMenuPrincipal(stage);
+        });
         Button btnInserir = new Button("Inserir Pagamento");
         Button btnConsultar = new Button("Consultar Pagamento");
         Button btnAtualizar = new Button("Atualizar Pagamento");
@@ -31,7 +28,7 @@ public class PaginaEscolherCrudPagamento  extends Application {
         btnAtualizar.setOnAction(event -> abrirPaginaAtualizacao(stage));
         btnExcluir.setOnAction(event -> abrirPaginaExclusao(stage));
 
-        layout.getChildren().addAll(btnInserir, btnConsultar, btnAtualizar, btnExcluir);
+        layout.getChildren().addAll(btnInserir, btnConsultar, btnAtualizar, btnExcluir, voltarBtn);
 
         Scene scene = new Scene(layout, 300, 250);
         stage.setTitle("Escolher Ação - Pagamento");
@@ -56,6 +53,10 @@ public class PaginaEscolherCrudPagamento  extends Application {
 
     private void abrirPaginaExclusao(Stage stage) {
         PaginaExcluirPagamento pagina = new PaginaExcluirPagamento();
+        pagina.start(stage);
+    }
+    public void voltarMenuPagamento(Stage stage){
+        PaginaEscolherCrudPagamento pagina = new PaginaEscolherCrudPagamento();
         pagina.start(stage);
     }
     public static void main(String[] args) {

@@ -27,6 +27,12 @@ public class PaginaAtualizarProduto extends Application {
         Label idLabel = new Label("ID do Produto:");
         idField = new TextField();
 
+        Button voltarBtn = new Button("Voltar");
+        voltarBtn.setOnAction(e -> {
+            PaginaEscolherCrudProduto menu = new PaginaEscolherCrudProduto();
+            menu.voltarMenuProduto(stage);
+        });
+
         Button buscarButton = new Button("Buscar");
         buscarButton.setOnAction(e -> buscarProduto());
 
@@ -48,7 +54,7 @@ public class PaginaAtualizarProduto extends Application {
                 new Label("Detalhes:"), detalhesField,
                 new Label("Condição:"), condicaoBox,
                 new Label("Categoria:"), categoriaBox,
-                salvarButton);
+                salvarButton, voltarBtn);
 
         layout.setPadding(new Insets(20));
         Scene scene = new Scene(layout, 400, 500);
