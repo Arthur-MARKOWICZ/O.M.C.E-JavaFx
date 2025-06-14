@@ -17,16 +17,18 @@ public class MenuPrincipal extends Application {
         Button btnProduto = new Button("Produto");
         Button btnPedido = new Button("Pedido");
         Button btnPagamento = new Button("Pagamento");
+        Button btnAvaliacao = new Button("Avaliação Produto");
 
         btnUsuario.setOnAction(event -> abrirPaginaUsuario(stage));
         btnProduto.setOnAction(event -> abrirPaginaProduto(stage));
-        btnPedido.setOnAction(event -> abrirPaginaAtualizacao(stage));
+        btnPedido.setOnAction(event -> abrirPaginaPedido(stage));
         btnPagamento.setOnAction(event -> abrirPaginaPagamento(stage));
+        btnAvaliacao.setOnAction(event -> abrirPaginaAvaliacao(stage));
 
-        layout.getChildren().addAll(btnUsuario, btnProduto, btnPedido, btnPagamento);
+        layout.getChildren().addAll(btnUsuario, btnProduto, btnPedido, btnPagamento, btnAvaliacao);
 
         Scene scene = new Scene(layout, 300, 250);
-        stage.setTitle("Escolher Ação - Pagamento");
+        stage.setTitle("Escolher Ação");
         stage.setScene(scene);
         stage.show();
     }
@@ -35,20 +37,22 @@ public class MenuPrincipal extends Application {
         UsuarioMenu pagina = new UsuarioMenu();
         pagina.start(stage);
     }
-
     private void abrirPaginaProduto(Stage stage) {
         ProdutoMenu pagina = new ProdutoMenu();
         pagina.start(stage);
     }
-    //todo: arrumar para o menu de pedido
-    private void abrirPaginaAtualizacao(Stage stage) {
-        PaginaAtualizarPagamento pagina = new PaginaAtualizarPagamento();
+    private void abrirPaginaPedido(Stage stage) {
+        PedidoMenu pagina = new PedidoMenu();
         pagina.start(stage);
     }
-
     private void abrirPaginaPagamento(Stage stage) {
         PaginaEscolherCrudPagamento pagina = new PaginaEscolherCrudPagamento();
         pagina.start(stage);
+    }
+    // Arrumar para avaliação produto
+    private void abrirPaginaAvaliacao(Stage stage) {
+        PaginaEscolherCrudAvaliacao pagina = new PaginaEscolherCrudAvaliacao();
+        //pagina.start(stage);
     }
     public void voltarMenuPrincipal(Stage stage){
         MenuPrincipal pagina = new MenuPrincipal();
