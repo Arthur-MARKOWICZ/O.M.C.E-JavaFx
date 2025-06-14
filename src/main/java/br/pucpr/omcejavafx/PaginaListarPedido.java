@@ -2,6 +2,7 @@ package br.pucpr.omcejavafx;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -35,8 +36,17 @@ public class PaginaListarPedido extends Application {
             e.printStackTrace();
         }
 
-        VBox layout = new VBox(10, area);
-        layout.setStyle("-fx-padding: 20;");
+        Button btnVoltar = new Button("Voltar");
+        btnVoltar.setOnAction(e -> {
+            try {
+                new PedidoMenu().start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        VBox layout = new VBox(10, area, btnVoltar);
+        layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
         Scene scene = new Scene(layout, 400, 300);
         stage.setTitle("Lista de Pedidos");
