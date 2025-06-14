@@ -1,12 +1,12 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pedido;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class PaginaAtualizarPedido extends Application {
+public class PaginaCadastrarPedido extends Application {
     private static final String CAMINHO_ARQUIVO = "pedidos.dat";
 
     @Override
@@ -15,38 +15,36 @@ public class PaginaAtualizarPedido extends Application {
         idField.setPromptText("ID do Pedido");
 
         TextField valorField = new TextField();
-        valorField.setPromptText("Novo Valor");
+        valorField.setPromptText("Valor");
 
         TextField enderecoField = new TextField();
-        enderecoField.setPromptText("Novo Endereço de Entrega");
+        enderecoField.setPromptText("Endereço de Entrega");
 
-        Button btnAtualizar = new Button("Atualizar Pedido");
+        Button btnSalvar = new Button("Salvar Pedido");
+        Button btnVoltar = new Button("Voltar");
         Label mensagem = new Label();
 
-        btnAtualizar.setOnAction(e -> {
+        btnSalvar.setOnAction(e -> {
             try {
                 long id = Long.parseLong(idField.getText());
-                double novoValor = Double.parseDouble(valorField.getText());
-                String novoEndereco = enderecoField.getText();
+                double valor = Double.parseDouble(valorField.getText());
+                String endereco = enderecoField.getText();
 
-                Pedido pedidoAtualizado = new Pedido(id, novoValor, novoEndereco);
-                PedidoDAO.atualizarPedido(pedidoAtualizado, CAMINHO_ARQUIVO);
-
-                mensagem.setText("Pedido atualizado com sucesso.");
+                Pedido pedido = new Pedido(id, valor, endereco);
+                PedidoDAO.salvarPedido(pedido, CAMINHO_ARQUIVO);
+                mensagem.setText("Pedido salvo com sucesso!");
 
                 idField.clear();
                 valorField.clear();
                 enderecoField.clear();
-
             } catch (NumberFormatException ex) {
                 mensagem.setText("Erro: ID e Valor devem ser numéricos.");
             } catch (Exception ex) {
-                mensagem.setText("Erro ao atualizar pedido: " + ex.getMessage());
+                mensagem.setText("Erro ao salvar pedido: " + ex.getMessage());
                 ex.printStackTrace();
             }
         });
 
-        Button btnVoltar = new Button("Voltar");
         btnVoltar.setOnAction(e -> {
             try {
                 new PedidoMenu().start(stage);
@@ -56,18 +54,18 @@ public class PaginaAtualizarPedido extends Application {
         });
 
         VBox layout = new VBox(10,
-                new Label("Atualizar Pedido"),
+                new Label("Inserir Pedido"),
                 idField,
                 valorField,
                 enderecoField,
-                btnAtualizar,
+                btnSalvar,
                 mensagem,
                 btnVoltar
         );
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
-        Scene scene = new Scene(layout, 350, 300);
-        stage.setTitle("Atualizar Pedido");
+        Scene scene = new Scene(layout, 350, 320);
+        stage.setTitle("Inserir Pedido");
         stage.setScene(scene);
         stage.show();
     }

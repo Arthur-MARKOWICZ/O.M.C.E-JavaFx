@@ -1,4 +1,4 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Pedido;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

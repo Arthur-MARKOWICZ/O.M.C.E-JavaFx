@@ -1,7 +1,7 @@
 package br.pucpr.omcejavafx;
 
-import br.pucpr.omcejavafx.Pagamento.PaginaAtualizarPagamento;
 import br.pucpr.omcejavafx.Pagamento.PaginaEscolherCrudPagamento;
+import br.pucpr.omcejavafx.Pedido.PedidoMenu;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
