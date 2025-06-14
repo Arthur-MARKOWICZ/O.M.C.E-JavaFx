@@ -46,13 +46,23 @@ public class PaginaAtualizarPedido extends Application {
             }
         });
 
+        Button btnVoltar = new Button("Voltar");
+        btnVoltar.setOnAction(e -> {
+            try {
+                new PedidoMenu().start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
         VBox layout = new VBox(10,
                 new Label("Atualizar Pedido"),
                 idField,
                 valorField,
                 enderecoField,
                 btnAtualizar,
-                mensagem
+                mensagem,
+                btnVoltar
         );
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 

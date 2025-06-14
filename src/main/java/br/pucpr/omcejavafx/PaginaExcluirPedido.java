@@ -33,6 +33,16 @@ public class PaginaExcluirPedido extends Application {
                 mensagem.setText("Erro: ID deve ser numérico.");
             } catch (Exception ex) {
                 mensagem.setText("Erro ao excluir pedido: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        });
+
+        Button btnVoltar = new Button("Voltar");
+        btnVoltar.setOnAction(e -> {
+            try {
+                new PedidoMenu().start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
 
@@ -40,7 +50,8 @@ public class PaginaExcluirPedido extends Application {
                 new Label("Excluir Pedido"),
                 idField,
                 btnExcluir,
-                mensagem
+                mensagem,
+                btnVoltar
         );
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 

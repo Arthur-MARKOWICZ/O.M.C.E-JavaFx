@@ -21,6 +21,7 @@ public class PaginaCadastrarPedido extends Application {
         enderecoField.setPromptText("Endereço de Entrega");
 
         Button btnSalvar = new Button("Salvar Pedido");
+        Button btnVoltar = new Button("Voltar");
         Label mensagem = new Label();
 
         btnSalvar.setOnAction(e -> {
@@ -44,17 +45,26 @@ public class PaginaCadastrarPedido extends Application {
             }
         });
 
+        btnVoltar.setOnAction(e -> {
+            try {
+                new PedidoMenu().start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
         VBox layout = new VBox(10,
                 new Label("Inserir Pedido"),
                 idField,
                 valorField,
                 enderecoField,
                 btnSalvar,
-                mensagem
+                mensagem,
+                btnVoltar
         );
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
-        Scene scene = new Scene(layout, 350, 300);
+        Scene scene = new Scene(layout, 350, 320);
         stage.setTitle("Inserir Pedido");
         stage.setScene(scene);
         stage.show();
