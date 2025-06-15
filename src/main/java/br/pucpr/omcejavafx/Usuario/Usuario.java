@@ -1,6 +1,7 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Usuario;
 
 import java.io.Serializable;
+import br.pucpr.omcejavafx.PaginaEscolherCrudUsuario;
 
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -34,7 +34,7 @@ public class MenuPrincipal extends Application {
     }
 
     private void abrirPaginaUsuario(Stage stage) {
-        UsuarioMenu pagina = new UsuarioMenu();
+       PaginaEscolherCrudUsuario pagina = new PaginaEscolherCrudUsuario();
         pagina.start(stage);
     }
     private void abrirPaginaProduto(Stage stage) {

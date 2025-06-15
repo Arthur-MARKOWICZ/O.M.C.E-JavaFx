@@ -1,10 +1,16 @@
 package br.pucpr.omcejavafx;
 
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+// Importa todas as telas de usuário
+import br.pucpr.omcejavafx.Usuario.PaginaCadastrarUsuario;
+import br.pucpr.omcejavafx.Usuario.PaginaListarUsuario;
+import br.pucpr.omcejavafx.Usuario.PaginaAtualizarUsuario;
+import br.pucpr.omcejavafx.Usuario.PaginaExcluirUsuario;
+import br.pucpr.omcejavafx.MenuPrincipal;
 
 public class PaginaEscolherCrudUsuario {
 
@@ -16,16 +22,18 @@ public class PaginaEscolherCrudUsuario {
         Button btnConsultar = new Button("Consultar Usuario");
         Button btnAtualizar = new Button("Atualizar Usuario");
         Button btnExcluir = new Button("Excluir Usuario");
+        Button btnVoltar = new Button("Voltar");
 
         btnInserir.setOnAction(event -> abrirPaginaCadastro(stage));
         btnConsultar.setOnAction(event -> abrirPaginaConsulta(stage));
         btnAtualizar.setOnAction(event -> abrirPaginaAtualizacao(stage));
         btnExcluir.setOnAction(event -> abrirPaginaExclusao(stage));
+        btnVoltar.setOnAction(event -> voltarMenuPrincipal(stage));
 
-        layout.getChildren().addAll(btnInserir, btnConsultar, btnAtualizar, btnExcluir);
+        layout.getChildren().addAll(btnInserir, btnConsultar, btnAtualizar, btnExcluir, btnVoltar);
 
         Scene scene = new Scene(layout, 300, 250);
-        stage.setTitle("Escolher Ação - Produto");
+        stage.setTitle("Escolher Ação - Usuario");
         stage.setScene(scene);
         stage.show();
     }
@@ -49,7 +57,12 @@ public class PaginaEscolherCrudUsuario {
         PaginaExcluirUsuario pagina = new PaginaExcluirUsuario();
         pagina.start(stage);
     }
+
     public void voltarMenuUsuario(Stage stage) {
         new PaginaEscolherCrudUsuario().start(stage);
+    }
+
+    public void voltarMenuPrincipal(Stage stage) {
+        new MenuPrincipal().start(stage);
     }
 }

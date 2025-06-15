@@ -1,7 +1,6 @@
-package br.pucpr.omcejavafx;
-
+package br.pucpr.omcejavafx.Usuario;
+import br.pucpr.omcejavafx.PaginaEscolherCrudUsuario;
 import javafx.application.Application;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
