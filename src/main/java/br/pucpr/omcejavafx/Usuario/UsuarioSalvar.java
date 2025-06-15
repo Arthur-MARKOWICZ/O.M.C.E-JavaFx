@@ -3,7 +3,6 @@ package br.pucpr.omcejavafx.Usuario;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import br.pucpr.omcejavafx.PaginaEscolherCrudUsuario;
 
 public class UsuarioSalvar {
 

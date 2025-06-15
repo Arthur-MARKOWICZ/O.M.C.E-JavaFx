@@ -45,17 +45,13 @@ public class PaginaListarPedido extends Application {
             pedidosObservable.addAll(pedidos);
             tabela.setItems(pedidosObservable);
         } catch (Exception e) {
-            Alert erro = new Alert(Alert.AlertType.ERROR);
-            erro.setTitle("Erro");
-            erro.setHeaderText("Erro ao carregar pedidos");
-            erro.setContentText(e.getMessage());
-            erro.showAndWait();
+            mostrarAlerta("Erro ao carregar pedidos:\n" + e.getMessage(), Alert.AlertType.ERROR);
         }
 
         Button btnVoltar = new Button("Voltar");
         btnVoltar.setOnAction(e -> {
             try {
-                new PedidoMenu().start(stage);
+                new PaginaEscolherCrudPedido().start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -72,5 +68,11 @@ public class PaginaListarPedido extends Application {
         stage.setTitle("Lista de Pedidos");
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void mostrarAlerta(String mensagem, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setContentText(mensagem);
+        alerta.showAndWait();
     }
 }

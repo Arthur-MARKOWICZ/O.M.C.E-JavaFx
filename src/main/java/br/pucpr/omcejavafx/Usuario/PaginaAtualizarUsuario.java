@@ -1,5 +1,4 @@
 package br.pucpr.omcejavafx.Usuario;
-import br.pucpr.omcejavafx.PaginaEscolherCrudUsuario;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;

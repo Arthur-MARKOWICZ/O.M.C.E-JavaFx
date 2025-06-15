@@ -1,7 +1,8 @@
 package br.pucpr.omcejavafx;
 
 import br.pucpr.omcejavafx.Pagamento.PaginaEscolherCrudPagamento;
-import br.pucpr.omcejavafx.Pedido.PedidoMenu;
+import br.pucpr.omcejavafx.Pedido.PaginaEscolherCrudPedido;
+import br.pucpr.omcejavafx.Usuario.PaginaEscolherCrudUsuario;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,7 +43,7 @@ public class MenuPrincipal extends Application {
         pagina.start(stage);
     }
     private void abrirPaginaPedido(Stage stage) {
-        PedidoMenu pagina = new PedidoMenu();
+        PaginaEscolherCrudPedido pagina = new PaginaEscolherCrudPedido();
         pagina.start(stage);
     }
     private void abrirPaginaPagamento(Stage stage) {

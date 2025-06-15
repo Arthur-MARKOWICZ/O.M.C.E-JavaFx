@@ -15,7 +15,6 @@ public class PaginaExcluirPedido extends Application {
         idField.setPromptText("ID do Pedido");
 
         Button btnExcluir = new Button("Excluir Pedido");
-        Label mensagem = new Label();
 
         btnExcluir.setOnAction(e -> {
             try {
@@ -23,16 +22,16 @@ public class PaginaExcluirPedido extends Application {
 
                 boolean removido = PedidoDAO.excluirPedido(id, CAMINHO_ARQUIVO);
                 if (removido) {
-                    mensagem.setText("Pedido excluído com sucesso.");
+                    mostrarAlerta("Pedido excluído com sucesso.", Alert.AlertType.INFORMATION);
                 } else {
-                    mensagem.setText("Pedido não encontrado.");
+                    mostrarAlerta("Pedido não encontrado.", Alert.AlertType.WARNING);
                 }
 
                 idField.clear();
             } catch (NumberFormatException ex) {
-                mensagem.setText("Erro: ID deve ser numérico.");
+                mostrarAlerta("Erro: ID deve ser numérico.", Alert.AlertType.WARNING);
             } catch (Exception ex) {
-                mensagem.setText("Erro ao excluir pedido: " + ex.getMessage());
+                mostrarAlerta("Erro ao excluir pedido: " + ex.getMessage(), Alert.AlertType.ERROR);
                 ex.printStackTrace();
             }
         });
@@ -40,7 +39,7 @@ public class PaginaExcluirPedido extends Application {
         Button btnVoltar = new Button("Voltar");
         btnVoltar.setOnAction(e -> {
             try {
-                new PedidoMenu().start(stage);
+                new PaginaEscolherCrudPedido().start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -50,7 +49,6 @@ public class PaginaExcluirPedido extends Application {
                 new Label("Excluir Pedido"),
                 idField,
                 btnExcluir,
-                mensagem,
                 btnVoltar
         );
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
@@ -59,5 +57,11 @@ public class PaginaExcluirPedido extends Application {
         stage.setTitle("Excluir Pedido");
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void mostrarAlerta(String mensagem, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setContentText(mensagem);
+        alerta.showAndWait();
     }
 }

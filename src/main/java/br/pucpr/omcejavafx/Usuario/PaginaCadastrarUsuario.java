@@ -1,12 +1,10 @@
 package br.pucpr.omcejavafx.Usuario;
-import br.pucpr.omcejavafx.PaginaEscolherCrudUsuario;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import br.pucpr.omcejavafx.PaginaEscolherCrudUsuario;
 
 public class PaginaCadastrarUsuario extends Application {
     private TextField idField;

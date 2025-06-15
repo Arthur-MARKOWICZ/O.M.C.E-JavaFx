@@ -24,7 +24,6 @@ public class PaginaCadastrarPedido extends Application {
 
         Button btnSalvar = new Button("Salvar Pedido");
         Button btnVoltar = new Button("Voltar");
-        Label mensagem = new Label();
 
         btnSalvar.setOnAction(e -> {
             try {
@@ -37,28 +36,28 @@ public class PaginaCadastrarPedido extends Application {
                         .anyMatch(p -> p.getId() == id);
 
                 if (idJaExiste) {
-                    mensagem.setText("Erro: Já existe um pedido com esse ID.");
+                    mostrarAlerta("Erro: Já existe um pedido com esse ID.", Alert.AlertType.ERROR);
                     return;
                 }
 
                 Pedido pedido = new Pedido(id, valor, endereco);
                 PedidoDAO.salvarPedido(pedido, CAMINHO_ARQUIVO);
-                mensagem.setText("Pedido salvo com sucesso!");
+                mostrarAlerta("Pedido salvo com sucesso!", Alert.AlertType.INFORMATION);
 
                 idField.clear();
                 valorField.clear();
                 enderecoField.clear();
             } catch (NumberFormatException ex) {
-                mensagem.setText("Erro: ID e Valor devem ser numéricos.");
+                mostrarAlerta("Erro: ID e Valor devem ser numéricos.", Alert.AlertType.WARNING);
             } catch (Exception ex) {
-                mensagem.setText("Erro ao salvar pedido: " + ex.getMessage());
+                mostrarAlerta("Erro ao salvar pedido: " + ex.getMessage(), Alert.AlertType.ERROR);
                 ex.printStackTrace();
             }
         });
 
         btnVoltar.setOnAction(e -> {
             try {
-                new PedidoMenu().start(stage);
+                new PaginaEscolherCrudPedido().start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -70,7 +69,6 @@ public class PaginaCadastrarPedido extends Application {
                 valorField,
                 enderecoField,
                 btnSalvar,
-                mensagem,
                 btnVoltar
         );
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
@@ -79,5 +77,11 @@ public class PaginaCadastrarPedido extends Application {
         stage.setTitle("Inserir Pedido");
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void mostrarAlerta(String mensagem, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setContentText(mensagem);
+        alerta.showAndWait();
     }
 }

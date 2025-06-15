@@ -1,5 +1,4 @@
 package br.pucpr.omcejavafx.Usuario;
-import br.pucpr.omcejavafx.PaginaEscolherCrudUsuario;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;

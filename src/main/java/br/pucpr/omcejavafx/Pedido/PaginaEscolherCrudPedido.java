@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class PedidoMenu extends Application {
+public class PaginaEscolherCrudPedido extends Application {
 
     @Override
     public void start(Stage stage) {
@@ -61,7 +61,7 @@ public class PedidoMenu extends Application {
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
         Scene scene = new Scene(layout, 300, 250);
-        stage.setTitle("Menu de Pedidos");
+        stage.setTitle("Escolher Ação - Pedido");
         stage.setScene(scene);
         stage.show();
     }

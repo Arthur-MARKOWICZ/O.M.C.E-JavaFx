@@ -1,4 +1,4 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Usuario;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -6,10 +6,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 // Importa todas as telas de usuário
-import br.pucpr.omcejavafx.Usuario.PaginaCadastrarUsuario;
-import br.pucpr.omcejavafx.Usuario.PaginaListarUsuario;
-import br.pucpr.omcejavafx.Usuario.PaginaAtualizarUsuario;
-import br.pucpr.omcejavafx.Usuario.PaginaExcluirUsuario;
 import br.pucpr.omcejavafx.MenuPrincipal;
 
 public class PaginaEscolherCrudUsuario {
