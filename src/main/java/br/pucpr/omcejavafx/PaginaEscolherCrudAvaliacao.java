@@ -9,9 +9,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class PaginaEscolherCrudAvaliacao extends PaginaEscolherCRUD {
+public class PaginaEscolherCrudAvaliacao extends MenuPrincipal {
 
-    @Override
     protected void onInserir(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(PaginaCadastroProduto.class.getResource("ProdutoInserir-view.fxml"));
         Scene scene = new Scene(loader.load(), 500, 500);
@@ -21,7 +20,6 @@ public class PaginaEscolherCrudAvaliacao extends PaginaEscolherCRUD {
         stage.show();
     }
 
-    @Override
     protected void onConsultar(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(PaginaListarProduto.class.getResource("ProdutoListar-view.fxml"));
         Scene scene = new Scene(loader.load(), 500, 500);
@@ -31,7 +29,6 @@ public class PaginaEscolherCrudAvaliacao extends PaginaEscolherCRUD {
         stage.show();
     }
 
-    @Override
     protected void onAtualizar(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(PaginaAtualizarProduto.class.getResource("ProdutoAtualizar-view.fxml"));
         Scene scene = new Scene(loader.load(), 500, 500);
@@ -41,7 +38,6 @@ public class PaginaEscolherCrudAvaliacao extends PaginaEscolherCRUD {
         stage.show();
     }
 
-    @Override
     protected void onExcluir(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(PaginaExcluirProduto.class.getResource("ProdutoExcluir-view.fxml"));
         Scene scene = new Scene(loader.load(), 500, 500);

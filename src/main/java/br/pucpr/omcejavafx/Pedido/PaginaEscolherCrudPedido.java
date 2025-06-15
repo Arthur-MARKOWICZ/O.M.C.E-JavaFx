@@ -12,7 +12,7 @@ public class PaginaEscolherCrudPedido extends Application {
     @Override
     public void start(Stage stage) {
         Button btnInserir = new Button("Inserir Pedido");
-        Button btnListar = new Button("Listar Pedidos");
+        Button btnListar = new Button("Consultar Pedido");
         Button btnAtualizar = new Button("Atualizar Pedido");
         Button btnExcluir = new Button("Excluir Pedido");
         Button btnVoltar = new Button("Voltar");
