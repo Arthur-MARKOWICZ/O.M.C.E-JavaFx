@@ -1,4 +1,5 @@
 package br.pucpr.omcejavafx.Usuario;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -6,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class PaginaCadastrarUsuario extends Application {
@@ -15,7 +17,7 @@ public class PaginaCadastrarUsuario extends Application {
     private TextField cpfField;
     private PasswordField senhaField;
     private ToggleGroup sexoField;
-    private TextField dataNascimentoField;
+    private DatePicker dataNascimentoField;
     private TextField telefoneField;
     private TextField emailField;
     private TextField enderecoField;
@@ -27,7 +29,8 @@ public class PaginaCadastrarUsuario extends Application {
         Button voltarBtn = new Button("Voltar");
         voltarBtn.setOnAction(e -> {
             PaginaEscolherCrudUsuario menu = new PaginaEscolherCrudUsuario();
-            menu.voltarMenuUsuario(stage);});
+            menu.voltarMenuUsuario(stage);
+        });
 
         idField = new TextField();
         idField.setPromptText("ID");
@@ -55,7 +58,7 @@ public class PaginaCadastrarUsuario extends Application {
 
         VBox sexoBox = new VBox(5, sexoLabel, rb1, rb2, rb3);
 
-        dataNascimentoField = new TextField();
+        dataNascimentoField = new DatePicker();
         dataNascimentoField.setPromptText("Data de Nascimento");
 
         telefoneField = new TextField();
@@ -89,7 +92,7 @@ public class PaginaCadastrarUsuario extends Application {
                 enderecoField,
                 cepField,
                 ativoCheckBox,
-                btnSalvar,voltarBtn
+                btnSalvar, voltarBtn
         );
 
         layout.setPadding(new Insets(20));
@@ -104,23 +107,26 @@ public class PaginaCadastrarUsuario extends Application {
         try {
             if (idField.getText().isEmpty() || nomeField.getText().isEmpty() ||
                     nomeUsuarioField.getText().isEmpty() || cpfField.getText().isEmpty() ||
-                    senhaField.getText().isEmpty() || sexoField.getToggles().isEmpty() ||
-                    dataNascimentoField.getText().isEmpty() || telefoneField.getText().isEmpty() ||
+                    senhaField.getText().isEmpty() || sexoField.getSelectedToggle() == null ||
+                    dataNascimentoField.getValue() == null || telefoneField.getText().isEmpty() ||
                     emailField.getText().isEmpty() || enderecoField.getText().isEmpty() ||
-                    cepField.getText().isEmpty() || ativoCheckBox.getText().isEmpty()) {
+                    cepField.getText().isEmpty()) {
 
-                mostrarAlerta("Preencha todos os campos", Alert.AlertType.WARNING);
+                mostrarAlerta("Preencha todos os campos obrigatórios", Alert.AlertType.WARNING);
                 return;
             }
+
             long id = Long.parseLong(idField.getText());
             List<Usuario> usuariosExistentes = UsuarioSalvar.carregarUsuarios("usuario.dat");
+
             boolean idJaExiste = usuariosExistentes.stream()
                     .anyMatch(p -> p.getId() == id);
 
             if (idJaExiste) {
-                mostrarAlerta("Erro: Já existe um pedido com esse ID.", Alert.AlertType.ERROR);
+                mostrarAlerta("Erro: Já existe um usuário com esse ID.", Alert.AlertType.ERROR);
                 return;
             }
+
             String nome = nomeField.getText();
             String nomeUsuario = nomeUsuarioField.getText();
             String cpf = cpfField.getText();
@@ -128,11 +134,13 @@ public class PaginaCadastrarUsuario extends Application {
 
             Toggle selectedToggle = sexoField.getSelectedToggle();
             String sexo = "";
-            if (selectedToggle != null && selectedToggle instanceof RadioButton) {
+            if (selectedToggle instanceof RadioButton) {
                 sexo = ((RadioButton) selectedToggle).getText();
             }
 
-            String dataNascimento = dataNascimentoField.getText();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataNascimento = dataNascimentoField.getValue().format(formatter);
+
             String telefone = telefoneField.getText();
             String email = emailField.getText();
             String endereco = enderecoField.getText();
@@ -161,7 +169,7 @@ public class PaginaCadastrarUsuario extends Application {
         cpfField.clear();
         senhaField.clear();
         sexoField.selectToggle(null);
-        dataNascimentoField.clear();
+        dataNascimentoField.setValue(null);
         telefoneField.clear();
         emailField.clear();
         enderecoField.clear();
@@ -179,4 +187,3 @@ public class PaginaCadastrarUsuario extends Application {
         launch();
     }
 }
-
