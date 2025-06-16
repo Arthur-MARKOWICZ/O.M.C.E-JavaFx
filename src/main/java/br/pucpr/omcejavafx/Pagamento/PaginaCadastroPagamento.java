@@ -8,13 +8,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 import static java.lang.Integer.parseInt;
 
 public class PaginaCadastroPagamento extends Application {
     private TextField Id;
     private TextField metodoPagamento;
-    private TextField Data;
+    private DatePicker  Data;
 
 
     @Override
@@ -30,7 +31,7 @@ public class PaginaCadastroPagamento extends Application {
         metodoPagamento = new TextField();
 
         Label Datalabel = new Label("Data do Pagamento:");
-        Data = new TextField();
+        Data = new DatePicker ();
 
 
 
@@ -41,7 +42,7 @@ public class PaginaCadastroPagamento extends Application {
         Button finalizarCadastro = new Button("Finalizar cadastro de Pagamento");
         finalizarCadastro.setOnAction(actionEvent -> {
             try {
-                if (Id.getText().isEmpty() || metodoPagamentolabel.getText().isEmpty()) {
+                if (Id.getText().isEmpty() || metodoPagamento.getText().isEmpty()) {
 
                     Alert alerta = new Alert(Alert.AlertType.WARNING);
                     alerta.setTitle("Campos obrigatórios");
@@ -51,11 +52,12 @@ public class PaginaCadastroPagamento extends Application {
                     return;
                 }
 
-
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                String dataFormatada = Data.getValue().format(formatter);
                 Pagamento pagamento = new Pagamento(
                         parseInt(Id.getText()),
-                        metodoPagamentolabel.getText(),
-                        Data.getText()
+                        metodoPagamento.getText(),
+                        dataFormatada
                 );
 
                 PagamentoDAO.salvar(pagamento);
@@ -84,7 +86,7 @@ public class PaginaCadastroPagamento extends Application {
             }
         });
 
-        VBox layout = new VBox(10, Idlabel, Id, metodoPagamentolabel, Datalabel,
+        VBox layout = new VBox(10, Idlabel, Id, metodoPagamentolabel,metodoPagamento, Datalabel,
                 Data,voltarBtn,  finalizarCadastro);
         layout.setPadding(new Insets(20));
         Scene scene = new Scene(layout, 400, 600);
@@ -97,7 +99,7 @@ public class PaginaCadastroPagamento extends Application {
     private void limparFormulario() {
         Id.clear();
         metodoPagamento.clear();
-        Data.clear();
+        Data.setValue(null);
     }
 
     public static void main(String[] args) {
