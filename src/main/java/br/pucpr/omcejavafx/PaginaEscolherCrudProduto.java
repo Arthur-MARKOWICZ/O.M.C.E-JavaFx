@@ -16,13 +16,21 @@ public class PaginaEscolherCrudProduto {
         Button btnConsultar = new Button("Consultar Produto");
         Button btnAtualizar = new Button("Atualizar Produto");
         Button btnExcluir = new Button("Excluir Produto");
+        Button btnVoltar = new Button("Voltar");
 
         btnInserir.setOnAction(event -> abrirPaginaCadastro(stage));
         btnConsultar.setOnAction(event -> abrirPaginaConsulta(stage));
         btnAtualizar.setOnAction(event -> abrirPaginaAtualizacao(stage));
         btnExcluir.setOnAction(event -> abrirPaginaExclusao(stage));
+        btnVoltar.setOnAction(e -> {
+            try {
+                new MenuPrincipal().start(stage);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
 
-        layout.getChildren().addAll(btnInserir, btnConsultar, btnAtualizar, btnExcluir);
+        layout.getChildren().addAll(btnInserir, btnConsultar, btnAtualizar, btnExcluir, btnVoltar);
 
         Scene scene = new Scene(layout, 300, 250);
         stage.setTitle("Escolher Ação - Produto");
