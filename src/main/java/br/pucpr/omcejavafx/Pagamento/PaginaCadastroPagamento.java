@@ -33,12 +33,6 @@ public class PaginaCadastroPagamento extends Application {
         Label Datalabel = new Label("Data do Pagamento:");
         Data = new DatePicker ();
 
-
-
-
-
-
-
         Button finalizarCadastro = new Button("Finalizar cadastro de Pagamento");
         finalizarCadastro.setOnAction(actionEvent -> {
             try {

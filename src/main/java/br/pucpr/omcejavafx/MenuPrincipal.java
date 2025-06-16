@@ -1,5 +1,6 @@
 package br.pucpr.omcejavafx;
 
+import br.pucpr.omcejavafx.Avaliacao.PaginaEscolherCrudAvaliacao;
 import br.pucpr.omcejavafx.Pagamento.PaginaEscolherCrudPagamento;
 import br.pucpr.omcejavafx.Pedido.PaginaEscolherCrudPedido;
 import br.pucpr.omcejavafx.Produto.PaginaEscolherCrudProduto;
@@ -51,10 +52,9 @@ public class MenuPrincipal extends Application {
         PaginaEscolherCrudPagamento pagina = new PaginaEscolherCrudPagamento();
         pagina.start(stage);
     }
-    // Arrumar para avaliação produto
     private void abrirPaginaAvaliacao(Stage stage) {
         PaginaEscolherCrudAvaliacao pagina = new PaginaEscolherCrudAvaliacao();
-        //pagina.start(stage);
+        pagina.start(stage);
     }
     public void voltarMenuPrincipal(Stage stage){
         MenuPrincipal pagina = new MenuPrincipal();

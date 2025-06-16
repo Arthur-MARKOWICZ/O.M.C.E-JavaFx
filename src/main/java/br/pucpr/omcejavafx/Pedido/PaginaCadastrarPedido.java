@@ -39,6 +39,10 @@ public class PaginaCadastrarPedido extends Application {
                     mostrarAlerta("Erro: Já existe um pedido com esse ID.", Alert.AlertType.ERROR);
                     return;
                 }
+                if (idField.getText().isEmpty() || valorField.getText().isEmpty() || enderecoField.getText().isEmpty()) {
+                    mostrarAlerta("Preencha todos os campos", Alert.AlertType.WARNING);
+                    return;
+                }
 
                 Pedido pedido = new Pedido(id, valor, endereco);
                 PedidoDAO.salvarPedido(pedido, CAMINHO_ARQUIVO);

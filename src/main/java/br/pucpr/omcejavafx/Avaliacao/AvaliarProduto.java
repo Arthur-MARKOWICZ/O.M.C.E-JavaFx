@@ -1,4 +1,4 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Avaliacao;
 import java.time.LocalDate;
 import java.io.Serializable;
 

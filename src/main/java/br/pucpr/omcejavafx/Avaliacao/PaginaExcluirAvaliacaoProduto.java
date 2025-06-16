@@ -1,4 +1,5 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Avaliacao;
 
 public class PaginaExcluirAvaliacaoProduto {
+
 }
