@@ -1,50 +1,67 @@
 package br.pucpr.omcejavafx;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AvaliarProdutoDAO {
-    private static final String ARQUIVO = "AvaliarPedido.dat";
 
-    public static void salvar(AvaliarProduto avaliacao) throws IOException {
-        List<AvaliarProduto> avaliacoes = carregarTodos();
-        avaliacoes.add(avaliacao);
-        salvarTodos(avaliacoes);
+    public static void salvarAvaliacao(AvaliarProduto novaAvaliacao, String caminhoArquivo) throws IOException {
+        List<AvaliarProduto> avaliacao = carregarAvaliacao(caminhoArquivo);
+        avaliacao.add(novaAvaliacao);
+
+        try (FileOutputStream fos = new FileOutputStream(caminhoArquivo);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(avaliacao);
+            System.out.println("Avaliação salva com sucesso!");
+        }
     }
 
-    public static List<AvaliarProduto> carregarTodos() throws IOException {
-        List<AvaliarProduto> avaliacoes = new ArrayList<>();
-        File file = new File(ARQUIVO);
+    @SuppressWarnings("unchecked")
+    public static List<AvaliarProduto> carregarAvaliacao(String caminhoArquivo) {
+        File arquivo = new File(caminhoArquivo);
+        if (!arquivo.exists()) {
+            return new ArrayList<>();
+        }
 
-        if (!file.exists()) return avaliacoes;
+        try (FileInputStream fis = new FileInputStream(caminhoArquivo);
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+            return (List<AvaliarProduto>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Erro ao carregar avaliações: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                String[] partes = linha.split(";");
-                if (partes.length == 4) {
-                    long id = Long.parseLong(partes[0]);
-                    double nota = Double.parseDouble(partes[1]);
-                    String comentario = partes[2];
-                    LocalDate data = LocalDate.parse(partes[3]);
-                    AvaliarProduto ap = new AvaliarProduto(id, nota, comentario);
+    public static boolean excluirAvaliacao(long id, String caminhoArquivo) throws IOException {
+        List<AvaliarProduto> avaliacao = carregarAvaliacao(caminhoArquivo);
+        boolean removido = avaliacao.removeIf(p -> p.getId() == id);
 
-                    avaliacoes.add(ap);
-                }
+        if (removido) {
+            try (FileOutputStream fos = new FileOutputStream(caminhoArquivo);
+                 ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                oos.writeObject(avaliacao);
+            }
+            System.out.println("Avaliação excluída com sucesso!");
+        }
+
+        return removido;
+    }
+
+    public static void atualizarAvaliacao(AvaliarProduto avaliacaoAtulizada, String caminhoArquivo) throws IOException {
+        List<AvaliarProduto> avaliacao = carregarAvaliacao(caminhoArquivo);
+
+        for (int i = 0; i < avaliacao.size(); i++) {
+            if (avaliacao.get(i).getId() == avaliacaoAtulizada.getId()) {
+                avaliacao.set(i, avaliacaoAtulizada);
+                break;
             }
         }
 
-        return avaliacoes;
-    }
-
-    public static void salvarTodos(List<AvaliarProduto> avaliacoes) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARQUIVO))) {
-            for (AvaliarProduto ap : avaliacoes) {
-                bw.write(ap.getId() + ";" + ap.getNota() + ";" + ap.getComentario() + ";" + ap.getDataAtual());
-                bw.newLine();
-            }
+        try (FileOutputStream fos = new FileOutputStream(caminhoArquivo);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(avaliacao);
+            System.out.println("Avaliação atualizada com sucesso!");
         }
     }
 }
