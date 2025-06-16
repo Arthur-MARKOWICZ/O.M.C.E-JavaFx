@@ -11,6 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
@@ -20,7 +22,7 @@ public class PaginaAtualizarPagamento extends Application {
 
     private TextField idField;
     private TextField metodoPagamento;
-    private TextField Data;
+    private DatePicker Data;
 
 
     private Pagamento pagamentoAtual;
@@ -38,7 +40,7 @@ public class PaginaAtualizarPagamento extends Application {
         buscarButton.setOnAction(e -> buscarPagamento());
 
         metodoPagamento = new TextField();
-        Data = new TextField();
+        Data = new DatePicker();
 
         Button salvarButton = new Button("Salvar Alterações");
         salvarButton.setOnAction(e -> salvarAlteracoes());
@@ -81,7 +83,10 @@ public class PaginaAtualizarPagamento extends Application {
 
     private void preencherFormulario(Pagamento p) {
         metodoPagamento.setText(p.getMetodoPagamento());
-        Data.setText(p.getData());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate data =  LocalDate.parse(p.getData(), formatter);
+        Data.setValue(data);
+
 
     }
 
@@ -90,10 +95,11 @@ public class PaginaAtualizarPagamento extends Application {
             mostrarAlerta("Nenhum produto carregado.", Alert.AlertType.ERROR);
             return;
         }
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dataFormatada = Data.getValue().format(formatter);
         try {
             pagamentoAtual.setMetodoPagamento(metodoPagamento.getText());
-            pagamentoAtual.setData(Data.getText());
+            pagamentoAtual.setData(dataFormatada);
             PagamentoDAO.atualizar(pagamentoAtual);
 
             mostrarAlerta("Pagamento atualizado com sucesso!", Alert.AlertType.INFORMATION);
