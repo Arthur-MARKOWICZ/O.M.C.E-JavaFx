@@ -1,7 +1,5 @@
 package br.pucpr.omcejavafx.Pagamento;
 
-import br.pucpr.omcejavafx.Produto;
-import br.pucpr.omcejavafx.ProdutoSalvar;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

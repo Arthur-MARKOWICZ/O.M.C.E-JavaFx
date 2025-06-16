@@ -13,4 +13,6 @@ module br.pucpr.omcejavafx {
     opens br.pucpr.omcejavafx.Pedido to javafx.fxml;
     exports br.pucpr.omcejavafx.Usuario;
     opens br.pucpr.omcejavafx.Usuario to javafx.fxml;
+    exports br.pucpr.omcejavafx.Produto;
+    opens br.pucpr.omcejavafx.Produto to javafx.fxml;
 }

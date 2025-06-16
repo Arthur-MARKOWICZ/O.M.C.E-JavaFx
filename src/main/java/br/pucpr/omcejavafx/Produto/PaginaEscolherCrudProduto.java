@@ -1,6 +1,6 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Produto;
 
-import javafx.event.ActionEvent;
+import br.pucpr.omcejavafx.MenuPrincipal;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;

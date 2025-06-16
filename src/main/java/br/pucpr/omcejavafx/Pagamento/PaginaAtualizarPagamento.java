@@ -1,8 +1,5 @@
 package br.pucpr.omcejavafx.Pagamento;
 
-import br.pucpr.omcejavafx.PaginaEscolherCrudProduto;
-import br.pucpr.omcejavafx.Produto;
-import br.pucpr.omcejavafx.ProdutoSalvar;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

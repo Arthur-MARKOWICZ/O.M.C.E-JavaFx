@@ -1,4 +1,4 @@
-package br.pucpr.omcejavafx;
+package br.pucpr.omcejavafx.Produto;
 
 import java.io.*;
 import java.util.ArrayList;

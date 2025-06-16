@@ -12,7 +12,7 @@ import java.io.IOException;
 public class PaginaEscolherCrudAvaliacao extends MenuPrincipal {
 
     protected void onInserir(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(PaginaCadastroProduto.class.getResource("ProdutoInserir-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(PaginaCadastrarAvaliacaoProduto.class.getResource("ProdutoInserir-view.fxml"));
         Scene scene = new Scene(loader.load(), 500, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Avaliar Produto - Inserir");
@@ -21,7 +21,7 @@ public class PaginaEscolherCrudAvaliacao extends MenuPrincipal {
     }
 
     protected void onConsultar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(PaginaListarProduto.class.getResource("ProdutoListar-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(PaginaListarAvaliacaoProduto.class.getResource("ProdutoListar-view.fxml"));
         Scene scene = new Scene(loader.load(), 500, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Avaliar Produto - Consultar");
@@ -30,7 +30,7 @@ public class PaginaEscolherCrudAvaliacao extends MenuPrincipal {
     }
 
     protected void onAtualizar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(PaginaAtualizarProduto.class.getResource("ProdutoAtualizar-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(PaginaAtualizarAvaliacaoProduto.class.getResource("ProdutoAtualizar-view.fxml"));
         Scene scene = new Scene(loader.load(), 500, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Avaliar Produto - Atualizar");
@@ -39,7 +39,7 @@ public class PaginaEscolherCrudAvaliacao extends MenuPrincipal {
     }
 
     protected void onExcluir(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(PaginaExcluirProduto.class.getResource("ProdutoExcluir-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(PaginaExcluirAvaliacaoProduto.class.getResource("ProdutoExcluir-view.fxml"));
         Scene scene = new Scene(loader.load(), 500, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Avaliar Produto - Excluir");

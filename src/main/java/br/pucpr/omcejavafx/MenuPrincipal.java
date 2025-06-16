@@ -2,6 +2,7 @@ package br.pucpr.omcejavafx;
 
 import br.pucpr.omcejavafx.Pagamento.PaginaEscolherCrudPagamento;
 import br.pucpr.omcejavafx.Pedido.PaginaEscolherCrudPedido;
+import br.pucpr.omcejavafx.Produto.PaginaEscolherCrudProduto;
 import br.pucpr.omcejavafx.Usuario.PaginaEscolherCrudUsuario;
 import javafx.application.Application;
 import javafx.scene.Scene;
