@@ -6,6 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class PaginaCadastrarUsuario extends Application {
     private TextField idField;
     private TextField nomeField;
@@ -45,7 +47,7 @@ public class PaginaCadastrarUsuario extends Application {
         Label sexoLabel = new Label("Sexo:");
         RadioButton rb1 = new RadioButton("Masculino");
         RadioButton rb2 = new RadioButton("Feminino");
-        RadioButton rb3 = new RadioButton("Prefiro não me identificar");
+        RadioButton rb3 = new RadioButton("Outro");
         sexoField = new ToggleGroup();
         rb1.setToggleGroup(sexoField);
         rb2.setToggleGroup(sexoField);
@@ -102,13 +104,23 @@ public class PaginaCadastrarUsuario extends Application {
         try {
             if (idField.getText().isEmpty() || nomeField.getText().isEmpty() ||
                     nomeUsuarioField.getText().isEmpty() || cpfField.getText().isEmpty() ||
-                    senhaField.getText().isEmpty()) {
+                    senhaField.getText().isEmpty() || sexoField.getToggles().isEmpty() ||
+                    dataNascimentoField.getText().isEmpty() || telefoneField.getText().isEmpty() ||
+                    emailField.getText().isEmpty() || enderecoField.getText().isEmpty() ||
+                    cepField.getText().isEmpty() || ativoCheckBox.getText().isEmpty()) {
 
-                mostrarAlerta("Preencha os campos obrigatórios: ID, Nome, Nome de Usuário, CPF e Senha.", Alert.AlertType.WARNING);
+                mostrarAlerta("Preencha todos os campos", Alert.AlertType.WARNING);
                 return;
             }
-
             long id = Long.parseLong(idField.getText());
+            List<Usuario> usuariosExistentes = UsuarioSalvar.carregarUsuarios("usuario.dat");
+            boolean idJaExiste = usuariosExistentes.stream()
+                    .anyMatch(p -> p.getId() == id);
+
+            if (idJaExiste) {
+                mostrarAlerta("Erro: Já existe um pedido com esse ID.", Alert.AlertType.ERROR);
+                return;
+            }
             String nome = nomeField.getText();
             String nomeUsuario = nomeUsuarioField.getText();
             String cpf = cpfField.getText();
