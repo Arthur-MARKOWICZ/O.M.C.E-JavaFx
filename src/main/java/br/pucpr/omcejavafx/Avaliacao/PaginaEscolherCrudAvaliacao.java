@@ -19,7 +19,7 @@ public class PaginaEscolherCrudAvaliacao extends Application {
 
         btnInserir.setOnAction(e -> {
             try {
-                //new PaginaCadastrarAvaliacaoProduto().start(stage);
+                new PaginaCadastrarAvaliacaoProduto().start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -27,7 +27,7 @@ public class PaginaEscolherCrudAvaliacao extends Application {
 
         btnListar.setOnAction(e -> {
             try {
-                //new PaginaListarAvaliacaoProduto().start(stage);
+                new PaginaListarAvaliacaoProduto().start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -35,7 +35,7 @@ public class PaginaEscolherCrudAvaliacao extends Application {
 
         btnAtualizar.setOnAction(e -> {
             try {
-                //new PaginaAtualizarAvaliacaoProduto().start(stage);
+                new PaginaAtualizarAvaliacaoProduto().start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -43,7 +43,7 @@ public class PaginaEscolherCrudAvaliacao extends Application {
 
         btnExcluir.setOnAction(e -> {
             try {
-                //new PaginaExcluirAvaliacaoProduto().start(stage);
+                new PaginaExcluirAvaliacaoProduto().start(stage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
