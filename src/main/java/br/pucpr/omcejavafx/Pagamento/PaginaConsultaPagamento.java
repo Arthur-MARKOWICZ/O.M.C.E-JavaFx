@@ -25,15 +25,15 @@ public class PaginaConsultaPagamento extends Application {
             PaginaEscolherCrudPagamento menu = new PaginaEscolherCrudPagamento();
             menu.voltarMenuPagamento(stage);
         });
-        TableColumn<Pagamento, String> idColuna = new TableColumn<>("ID");
+        TableColumn<Pagamento, String> idColuna = new TableColumn<>("   ID   ");
         idColuna.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
 
-        TableColumn<Pagamento, String> metodoDePagamentoColuna = new TableColumn<>("Metodo de pagamento");
+        TableColumn<Pagamento, String> metodoDePagamentoColuna = new TableColumn<>("   Metodo de pagamento    ");
         metodoDePagamentoColuna.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty
                 (cellData.getValue().getMetodoPagamento()));
 
-        TableColumn<Pagamento, String> dataColuna = new TableColumn<>("Data");
+        TableColumn<Pagamento, String> dataColuna = new TableColumn<>("   Data   ");
         dataColuna.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty
                 (cellData.getValue().getData()));
 
@@ -58,7 +58,7 @@ public class PaginaConsultaPagamento extends Application {
         topo.setStyle("-fx-padding: 10; -fx-alignment: center-left;");
         layout.setTop(topo);
         layout.setCenter(tabela);
-        Scene scene = new Scene(layout, 800, 600);
+        Scene scene = new Scene(layout, 325, 600);
 
         stage.setTitle("Lista de Pagamentos Cadastrados");
         stage.setScene(scene);
