@@ -28,9 +28,7 @@ public class AvaliarProduto implements Serializable {
         return comentario;
     }
 
-    public LocalDate getDataAtual() {
-        return dataAtual;
-    }
+    public LocalDate getDataAtual() { return LocalDate.now(); }
 
     public void setNota(double nota) {
         if (nota >= 0 && nota <= 10){
